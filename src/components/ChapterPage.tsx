@@ -85,7 +85,6 @@ export function ChapterPage({ chapter }: { chapter: Chapter }) {
           {prev ? (
             <Link
               href={`/${prev.slug}`}
-              // @ts-expect-error Next 16 prop not yet in types
               transitionTypes={["nav-back"]}
               className="group flex items-center gap-[var(--space-sm)] text-left"
             >
@@ -100,7 +99,6 @@ export function ChapterPage({ chapter }: { chapter: Chapter }) {
           ) : (
             <Link
               href="/"
-              // @ts-expect-error Next 16 prop not yet in types
               transitionTypes={["nav-back"]}
               className="group flex items-center gap-[var(--space-sm)] text-left"
             >
@@ -117,7 +115,6 @@ export function ChapterPage({ chapter }: { chapter: Chapter }) {
           {next && (
             <Link
               href={`/${next.slug}`}
-              // @ts-expect-error Next 16 prop not yet in types
               transitionTypes={["nav-forward"]}
               className="group flex items-center gap-[var(--space-sm)] text-right"
             >

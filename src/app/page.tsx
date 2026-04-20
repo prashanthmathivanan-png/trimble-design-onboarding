@@ -40,7 +40,6 @@ export default function WelcomePage() {
               <div className="flex flex-wrap items-center gap-[var(--space-xs)] pt-[var(--space-sm)]">
                 <Link
                   href="/learn"
-                  // @ts-expect-error Next 16 prop not yet in types
                   transitionTypes={["nav-forward"]}
                   className="group inline-flex items-center gap-[var(--space-xs)] px-5 py-3 rounded-full glass-selected text-[var(--color-fg)] text-[length:var(--text-md)] font-semibold hover:brightness-110 transition"
                 >
@@ -184,7 +183,6 @@ export default function WelcomePage() {
             <Reveal key={c.slug} delay={i * 0.1}>
               <Link
                 href={`/${c.slug}`}
-                // @ts-expect-error Next 16 prop not yet in types
                 transitionTypes={["nav-forward"]}
                 className="group relative overflow-hidden rounded-2xl aspect-[4/5] block"
               >

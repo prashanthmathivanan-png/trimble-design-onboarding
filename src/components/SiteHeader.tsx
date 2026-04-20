@@ -34,7 +34,6 @@ export function SiteHeader() {
                 <Link
                   key={c.href}
                   href={c.href}
-                  // @ts-expect-error — transitionTypes is a Next 16 feature not yet in the types
                   transitionTypes={[direction]}
                   className={clsx(
                     "kicker px-3 py-1.5 rounded-full transition-all flex items-center gap-2",
