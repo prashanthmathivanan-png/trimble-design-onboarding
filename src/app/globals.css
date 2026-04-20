@@ -1,26 +1,400 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "@trimble-oss/moduswebcomponents/modus-wc-styles.css";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-elev: var(--bg-elev);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-accent: var(--accent);
+  --color-line: var(--line);
+  --font-sans: var(--font-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root,
+html.dark {
+  color-scheme: dark;
+  --bg: #0a0b0d;
+  --bg-elev: #16181d;
+  --fg: #f5f5f7;
+  --fg-muted: #a7a9b3;
+  --accent: #ffb347;
+  --line: rgb(255 255 255 / 0.1);
+  --glass-bg: rgb(30 33 40 / 0.7);
+  --glass-border: rgb(255 255 255 / 0.14);
+  --glass-highlight: rgb(255 255 255 / 0.08);
+}
+
+html.light {
+  color-scheme: light;
+  --bg: #f5f4ef;
+  --bg-elev: #ffffff;
+  --fg: #131417;
+  --fg-muted: #5a5c66;
+  --accent: #c96a2c;
+  --line: rgb(0 0 0 / 0.08);
+  --glass-bg: rgb(255 255 255 / 0.55);
+  --glass-border: rgb(0 0 0 / 0.08);
+  --glass-highlight: rgb(0 0 0 / 0.04);
+}
+
+/* ============================================================
+   TYPE SYSTEM — compact
+   Single family (Open Sans), three weights (400 / 600 / 800).
+   Four conceptual roles: Display, Heading, Body, Kicker.
+   App UI: rem scale. Hero/marketing display: small clamp() range.
+   ============================================================ */
+:root {
+  /* App UI scale — fixed rem. Tuned smaller for dense product UI. */
+  --text-2xs: 0.6875rem; /* 11px — kicker / eyebrow */
+  --text-xs:  0.75rem;   /* 12px — caption / hint */
+  --text-sm:  0.875rem;  /* 14px — secondary body */
+  --text-md:  1rem;      /* 16px — body */
+  --text-lg:  1.0625rem; /* 17px — lead body */
+  --text-xl:  1.25rem;   /* 20px — small subheading */
+  --text-2xl: 1.5rem;    /* 24px — subheading */
+  --text-3xl: 1.875rem;  /* 30px — small heading */
+
+  /* Display scale — fluid, but the max stops are smaller than before
+     so headlines don't overwhelm the page. */
+  --display-xs:  clamp(1.5rem,  1.25rem + 1.2vw, 2rem);    /* 24 → 32 */
+  --display-sm:  clamp(1.875rem, 1.4rem + 2vw,   2.5rem);  /* 30 → 40 */
+  --display-md:  clamp(2.25rem, 1.6rem + 3vw,    3.25rem); /* 36 → 52 */
+  --display-lg:  clamp(2.75rem, 1.8rem + 4.5vw,  4.25rem); /* 44 → 68 */
+  --display-xl:  clamp(3.25rem, 2rem + 6vw,      5.5rem);  /* 52 → 88 */
+  --display-2xl: clamp(4.5rem, 2.5rem + 10vw,    8rem);    /* 72 → 128, decorative ghost numerals only */
+
+  /* Leading — paired with the size tier, not chosen ad hoc. */
+  --leading-display: 0.95;
+  --leading-heading: 1.08;
+  --leading-subhead: 1.25;
+  --leading-body:    1.55;
+  --leading-tight:   1.35;
+
+  /* Tracking — display tracking shrinks with size; body and below stay open. */
+  --tracking-display-2xl: -0.035em;
+  --tracking-display-xl:  -0.03em;
+  --tracking-display-lg:  -0.025em;
+  --tracking-display-md:  -0.02em;
+  --tracking-display-sm:  -0.012em;
+  --tracking-display-xs:  -0.008em;
+  --tracking-subhead:     -0.008em;
+  --tracking-body:        0;
+  --tracking-kicker:      0.14em;
+
+  /* Measure — body never wider than ~65ch; lead paragraphs narrower. */
+  --measure-prose:  65ch;
+  --measure-lead:   46ch;
+  --measure-narrow: 32ch;
+
+  /* ---------- Spacing scale ----------
+     One scale, semantic names. Use these for every gap, padding, margin.
+     4pt base, expanding geometrically once past 16. */
+  --space-3xs: 0.25rem;  /*  4px */
+  --space-2xs: 0.5rem;   /*  8px */
+  --space-xs:  0.75rem;  /* 12px */
+  --space-sm:  1rem;     /* 16px */
+  --space-md:  1.5rem;   /* 24px */
+  --space-lg:  2.5rem;   /* 40px */
+  --space-xl:  4rem;     /* 64px */
+  --space-2xl: 6rem;     /* 96px */
+  --space-3xl: 9rem;     /* 144px */
+
+  /* Section rhythm — fluid, breathes more on big screens.
+     Three flavours so the page has a beat instead of one constant. */
+  --section-y-sm: clamp(2.5rem, 1.5rem + 3vw, 4rem);     /* 40 → 64 */
+  --section-y-md: clamp(3.5rem, 2rem + 4.5vw, 6rem);     /* 56 → 96 */
+  --section-y-lg: clamp(5rem,   3rem + 6vw,   8rem);     /* 80 → 128 */
+
+  /* Hero top padding — header is ~64px tall plus its top offset.
+     Was 160-224px (pt-40 md:pt-56) which left a vacuum below the nav. */
+  --hero-pt: clamp(6rem, 4rem + 6vw, 9rem);              /* 96 → 144 */
+
+  /* Page gutter / max-width — one source of truth so the shell stops
+     being copy-pasted in 8 different files. */
+  --shell-max: 1600px;
+  --shell-x:   clamp(1.25rem, 0.5rem + 3vw, 5rem);       /* 20 → 80 */
+  --shell-x-narrow: clamp(1.25rem, 0.75rem + 2vw, 3.5rem); /* 20 → 56 */
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-feature-settings: "kern" 1, "ss01" 1, "cv11" 1;
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-size: var(--text-md);
+  line-height: var(--leading-body);
+  font-weight: 400;
+  background-image:
+    radial-gradient(
+      ellipse 1200px 800px at 20% 10%,
+      color-mix(in oklch, var(--color-accent) 8%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 1000px 900px at 90% 70%,
+      color-mix(in oklch, var(--color-accent) 5%, transparent),
+      transparent 60%
+    );
+  background-attachment: fixed;
+}
+
+/* ---------- Display family ----------
+   Marker class — pair with one of the .display-* size utilities below.
+   Tracking is intentionally NOT set here (it's tier-dependent). */
+.font-display {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-weight: 800;
+  font-kerning: normal;
+}
+
+.display-2xl { font-size: var(--display-2xl); line-height: var(--leading-display); letter-spacing: var(--tracking-display-2xl); }
+.display-xl  { font-size: var(--display-xl);  line-height: var(--leading-display); letter-spacing: var(--tracking-display-xl); }
+.display-lg  { font-size: var(--display-lg);  line-height: var(--leading-display); letter-spacing: var(--tracking-display-lg); }
+.display-md  { font-size: var(--display-md);  line-height: var(--leading-heading); letter-spacing: var(--tracking-display-md); }
+.display-sm  { font-size: var(--display-sm);  line-height: var(--leading-heading); letter-spacing: var(--tracking-display-sm); }
+.display-xs  { font-size: var(--display-xs);  line-height: var(--leading-subhead); letter-spacing: var(--tracking-display-xs); }
+
+/* ---------- Subheading ----------
+   Open Sans 600 reads better than 800 below ~28px — heavy weight chunks up. */
+.subhead-md { font-family: var(--font-sans), system-ui, sans-serif; font-weight: 600; font-size: var(--text-2xl); line-height: var(--leading-subhead); letter-spacing: var(--tracking-subhead); }
+.subhead-sm { font-family: var(--font-sans), system-ui, sans-serif; font-weight: 600; font-size: var(--text-xl); line-height: var(--leading-subhead); letter-spacing: var(--tracking-subhead); }
+.subhead-xs { font-family: var(--font-sans), system-ui, sans-serif; font-weight: 600; font-size: var(--text-lg); line-height: var(--leading-subhead); letter-spacing: var(--tracking-subhead); }
+
+/* ---------- Lead ----------
+   Hero / section opening paragraphs. Reads as "important body" without going
+   sub-400 weight (light Open Sans on dark surfaces reads spindly). */
+.lead-lg { font-size: var(--text-xl); font-weight: 400; line-height: 1.4;  letter-spacing: -0.005em; max-width: var(--measure-lead); }
+.lead-md { font-size: var(--text-lg); font-weight: 400; line-height: 1.5;  max-width: var(--measure-lead); }
+
+/* ---------- Body ---------- */
+.body-md { font-size: var(--text-md); font-weight: 400; line-height: var(--leading-body); max-width: var(--measure-prose); }
+.body-sm { font-size: var(--text-sm); font-weight: 400; line-height: 1.55; max-width: var(--measure-prose); }
+
+/* ---------- Caption / hints ---------- */
+.caption { font-size: var(--text-xs); font-weight: 400; line-height: 1.5; color: var(--color-fg-muted); }
+
+/* ---------- Kicker / eyebrow ----------
+   Replaces the old "fake mono" .label-xs pattern. Caps with controlled tracking
+   (0.16em — the previous 0.22em was excessive for 11px). */
+.kicker {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: var(--text-2xs);
+  line-height: 1.2;
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+  font-feature-settings: "tnum" 1, "ss01" 1;
+}
+
+/* Backwards-compatible alias — keep the old class working until callsites migrate. */
+.label-xs {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: var(--text-2xs);
+  line-height: 1.2;
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+  font-feature-settings: "tnum" 1, "ss01" 1;
+}
+
+/* ---------- Helvetica brand lockup ----------
+   ONLY used inside <TrimbleDesignAPAC>. Helvetica's true tight tracking sits
+   slightly tighter than Open Sans's, so we hold it at -0.018em. */
+.font-helvetica {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  letter-spacing: -0.018em;
+  font-feature-settings: "kern" 1;
+}
+
+/* ---------- Numerics ----------
+   Counters, big ghost chapter numbers, anything whose digits change over time. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ============================================================
+   LAYOUT PRIMITIVES
+   ============================================================ */
+
+/* Page shell — replaces the literal `mx-auto max-w-[1600px] px-6 md:px-20`
+   that was repeated everywhere. Fluid gutter via clamp(). */
+.shell {
+  width: 100%;
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  padding-inline: var(--shell-x);
+}
+.shell-narrow {
+  width: 100%;
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  padding-inline: var(--shell-x-narrow);
+}
+
+/* Section rhythm — three flavours, used in alternation so the page has a beat. */
+.section-y-sm { padding-block: var(--section-y-sm); }
+.section-y-md { padding-block: var(--section-y-md); }
+.section-y-lg { padding-block: var(--section-y-lg); }
+
+/* Hero top padding — accounts for the fixed header. */
+.hero-pt { padding-top: var(--hero-pt); }
+
+/* Stack — vertical flow with a single semantic gap.
+   Replaces ad-hoc mt-4 / mt-6 / mt-8 / mt-10 / mt-12 chains. */
+.stack-3xs > * + * { margin-block-start: var(--space-3xs); }
+.stack-2xs > * + * { margin-block-start: var(--space-2xs); }
+.stack-xs  > * + * { margin-block-start: var(--space-xs); }
+.stack-sm  > * + * { margin-block-start: var(--space-sm); }
+.stack-md  > * + * { margin-block-start: var(--space-md); }
+.stack-lg  > * + * { margin-block-start: var(--space-lg); }
+.stack-xl  > * + * { margin-block-start: var(--space-xl); }
+
+/* Glass surface */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(1.3);
+  -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 10px 40px rgb(0 0 0 / 0.25);
+}
+
+.glass-soft {
+  background: color-mix(in oklch, var(--bg-elev) 65%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--line);
+}
+
+/* Pure-blur surface: no border, no shadow, no inset highlight.
+   Text reads as floating on a translucent fog. */
+.glass-bare {
+  background: color-mix(in oklch, var(--bg) 40%, transparent);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+}
+
+/* Selected-state glass: dark base with a faint warm accent undertone.
+   Use for active nav items and primary CTAs — reads as "chosen" without
+   the hard contrast of solid white. */
+.glass-selected {
+  background: color-mix(in oklch, var(--bg-elev) 82%, var(--accent));
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  border: 1px solid color-mix(in oklch, var(--accent) 28%, var(--glass-border));
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 6px 24px color-mix(in oklch, var(--accent) 18%, transparent);
+}
+
+/* Hairline accents */
+.hairline {
+  border-color: var(--line);
+}
+
+/* Prevent Chrome's dark-mode UA stylesheet from rendering links
+   in light blue via :visited — always inherit from the parent. */
+a,
+a:visited {
+  color: inherit;
+}
+
+/* ========== View Transitions ========== */
+:root {
+  --duration-exit: 150ms;
+  --duration-enter: 260ms;
+}
+
+::view-transition-old(.nav-forward) {
+  --slide-offset: -60px;
+  animation:
+    150ms ease-in both vt-fade reverse,
+    420ms cubic-bezier(0.65, 0, 0.35, 1) both vt-slide reverse;
+}
+::view-transition-new(.nav-forward) {
+  --slide-offset: 80px;
+  animation:
+    var(--duration-enter) ease-out 150ms both vt-fade,
+    480ms cubic-bezier(0.65, 0, 0.35, 1) both vt-slide;
+}
+
+::view-transition-old(.nav-back) {
+  --slide-offset: 60px;
+  animation:
+    150ms ease-in both vt-fade reverse,
+    420ms cubic-bezier(0.65, 0, 0.35, 1) both vt-slide reverse;
+}
+::view-transition-new(.nav-back) {
+  --slide-offset: -80px;
+  animation:
+    var(--duration-enter) ease-out 150ms both vt-fade,
+    480ms cubic-bezier(0.65, 0, 0.35, 1) both vt-slide;
+}
+
+@keyframes vt-fade {
+  from {
+    filter: blur(6px);
+    opacity: 0;
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+@keyframes vt-slide {
+  from {
+    translate: var(--slide-offset);
+  }
+  to {
+    translate: 0;
+  }
+}
+
+/* Anchor the site header during transitions */
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* Hide Lenis scrollbars nicely */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
 }

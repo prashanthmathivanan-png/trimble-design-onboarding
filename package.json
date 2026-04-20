@@ -9,6 +9,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
+    "@trimble-oss/moduswebcomponents": "^1.3.0",
+    "@trimble-oss/moduswebcomponents-react": "^1.3.0-react19",
+    "clsx": "^2.1.1",
+    "lenis": "^1.3.23",
+    "motion": "^12.38.0",
     "next": "16.2.4",
     "react": "19.2.4",
     "react-dom": "19.2.4"
