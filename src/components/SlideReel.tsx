@@ -65,6 +65,7 @@ export function SlideReel({ slides }: { slides: ReactNode[] }) {
               : { type: "spring", stiffness: 110, damping: 22, mass: 0.6 }
           }
           drag="x"
+          dragDirectionLock
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.18}
           onDragEnd={handleDragEnd}
