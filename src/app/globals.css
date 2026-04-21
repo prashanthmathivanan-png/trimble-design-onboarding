@@ -48,6 +48,16 @@ body {
 body {
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+/* Ambient page glow — painted on a fixed-position pseudo element instead
+   of body's background-attachment:fixed so scroll stays repaint-free. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background-image:
     radial-gradient(
       ellipse 1200px 800px at 20% 10%,
@@ -59,7 +69,6 @@ body {
       color-mix(in oklch, var(--color-accent) 5%, transparent),
       transparent 60%
     );
-  background-attachment: fixed;
 }
 
 /* Utility: display type — Open Sans at heavy weights with tight tracking */
