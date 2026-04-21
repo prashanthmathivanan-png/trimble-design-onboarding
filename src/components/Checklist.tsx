@@ -66,14 +66,14 @@ function Item({
         <span className="min-w-0 flex-1">
           <span
             className={clsx(
-              "block text-[length:var(--text-md)] leading-snug",
+              "block text-[15px] leading-snug",
               isDone && "line-through text-[var(--color-fg-muted)]"
             )}
           >
             {item.label}
           </span>
           {item.hint && (
-            <span className="block text-[length:var(--text-sm)] leading-snug mt-1 text-[var(--color-fg-muted)]">
+            <span className="block text-xs mt-0.5 text-[var(--color-fg-muted)]">
               {item.hint}
             </span>
           )}
@@ -108,18 +108,18 @@ export function ChecklistGroupView({
       <GlassPanel className="h-full flex flex-col">
         <div className="flex items-start justify-between gap-4 mb-4">
           <div>
-            <div className="kicker tnum text-[var(--color-fg-muted)]">
+            <div className="label-xs text-[var(--color-fg-muted)]">
               {String(index + 1).padStart(2, "0")} · {group.title.toUpperCase()}
             </div>
-            <div className="subhead-md mt-2">{group.title}</div>
+            <div className="font-display text-2xl md:text-3xl mt-2">{group.title}</div>
             {group.blurb && (
-              <p className="body-sm mt-2 text-[var(--color-fg-muted)]">
+              <p className="mt-2 text-sm text-[var(--color-fg-muted)] max-w-xl">
                 {group.blurb}
               </p>
             )}
           </div>
           <div className="text-right shrink-0">
-            <div className="kicker tnum text-[var(--color-fg-muted)]">
+            <div className="label-xs text-[var(--color-fg-muted)]">
               {completed} / {total}
             </div>
             <div className="mt-1 w-20 h-1 rounded-full bg-[var(--line)] overflow-hidden">

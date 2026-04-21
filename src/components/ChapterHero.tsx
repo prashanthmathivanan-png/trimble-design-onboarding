@@ -23,7 +23,7 @@ export function ChapterHero({
   heroImage,
 }: Props) {
   return (
-    <section className="relative min-h-[78svh] overflow-hidden flex flex-col">
+    <section className="relative min-h-[92vh] overflow-hidden">
       <Image
         src={heroImage}
         alt=""
@@ -42,44 +42,42 @@ export function ChapterHero({
         }}
       />
 
-      <div className="relative shell hero-pt pb-[var(--space-xl)] flex-1 flex flex-col justify-center">
-        <div className="flex items-start gap-[var(--space-md)] mb-[var(--space-md)]">
+      <div className="relative mx-auto max-w-[1600px] px-6 md:px-20 pt-40 md:pt-56 pb-20">
+        <div className="flex items-start gap-8 mb-6">
           <Reveal>
-            <div className="font-display display-2xl tnum opacity-15 select-none leading-none">
+            <div className="font-display text-[10rem] md:text-[15rem] leading-[0.85] tracking-tighter opacity-15 select-none">
               {number}
             </div>
           </Reveal>
           <Reveal delay={0.1}>
-            <div className="pt-[var(--space-xs)] stack-3xs">
-              <div className="kicker text-[var(--color-fg-muted)]">
+            <div className="pt-4">
+              <div className="label-xs text-[var(--color-fg-muted)]">
                 {verb.toUpperCase()}
               </div>
-              <div className="kicker text-[var(--color-accent)]">
+              <div className="label-xs text-[var(--color-accent)] mt-1">
                 {duration}
               </div>
             </div>
           </Reveal>
         </div>
 
-        <div className="stack-md">
-          <Reveal delay={0.15}>
-            <h1 className="font-display display-lg max-w-5xl">
-              {title}
-            </h1>
-          </Reveal>
+        <Reveal delay={0.15}>
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[0.95] max-w-5xl">
+            {title}
+          </h1>
+        </Reveal>
 
-          <Reveal delay={0.3}>
-            <p className="lead-lg text-[var(--color-fg-muted)]">
-              {tagline}
-            </p>
-          </Reveal>
+        <Reveal delay={0.3}>
+          <p className="mt-6 text-xl md:text-2xl max-w-2xl text-[var(--color-fg-muted)] leading-snug font-light">
+            {tagline}
+          </p>
+        </Reveal>
 
-          <Reveal delay={0.45}>
-            <p className="body-md text-[var(--color-fg)]/85 pt-[var(--space-xs)]">
-              {summary}
-            </p>
-          </Reveal>
-        </div>
+        <Reveal delay={0.45}>
+          <p className="mt-10 max-w-xl text-base text-[var(--color-fg)]/80 leading-relaxed">
+            {summary}
+          </p>
+        </Reveal>
       </div>
     </section>
   );

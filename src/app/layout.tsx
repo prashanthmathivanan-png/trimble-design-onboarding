@@ -10,8 +10,6 @@ const openSans = Open_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "600", "800"],
-  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {

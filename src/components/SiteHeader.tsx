@@ -19,8 +19,8 @@ export function SiteHeader() {
       style={{ viewTransitionName: "site-header" }}
       className="fixed top-0 inset-x-0 z-50"
     >
-      <div className="shell pt-[var(--space-sm)]">
-        <div className="glass-bare rounded-full flex items-center justify-end gap-[var(--space-sm)] px-[var(--space-sm)] py-[var(--space-2xs)] text-[var(--color-fg)]">
+      <div className="mx-auto max-w-[1600px] px-6 md:px-10 pt-5">
+        <div className="glass-bare rounded-full flex items-center justify-end gap-4 px-5 py-2.5 text-[var(--color-fg)]">
           <nav className="flex items-center gap-1">
             {CHAPTERS.map((c) => {
               const active = pathname === c.href;
@@ -36,13 +36,13 @@ export function SiteHeader() {
                   href={c.href}
                   transitionTypes={[direction]}
                   className={clsx(
-                    "kicker px-3 py-1.5 rounded-full transition-all flex items-center gap-2",
+                    "label-xs px-3 py-1.5 rounded-full transition-all flex items-center gap-2",
                     active
                       ? "glass-selected text-[var(--color-fg)]"
                       : "text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
                   )}
                 >
-                  <span className="tnum opacity-60">{c.num}</span>
+                  <span className="opacity-60">{c.num}</span>
                   <span>{c.label}</span>
                 </Link>
               );

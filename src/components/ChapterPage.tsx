@@ -28,8 +28,8 @@ export function ChapterPage({ chapter }: { chapter: Chapter }) {
       />
 
       {/* Checklist groups */}
-      <section className="relative shell section-y-md">
-        <div className="grid md:grid-cols-2 gap-[var(--space-md)] auto-rows-fr">
+      <section className="relative mx-auto max-w-[1600px] px-6 md:px-20 py-20">
+        <div className="grid md:grid-cols-2 gap-5 auto-rows-fr">
           {chapter.groups.map((group, i) => (
             <ChecklistGroupView key={group.id} group={group} index={i} />
           ))}
@@ -38,41 +38,37 @@ export function ChapterPage({ chapter }: { chapter: Chapter }) {
 
       {/* Leaders callout (Learn chapter only) */}
       {showLeaders && (
-        <section className="relative shell section-y-md">
-          <div className="grid md:grid-cols-12 gap-[var(--space-lg)] items-start">
-            <div className="md:col-span-4 stack-md md:sticky md:top-[var(--space-xl)]">
-              <Reveal>
-                <div className="kicker text-[var(--color-fg-muted)]">
-                  PEOPLE TO MEET
-                </div>
-              </Reveal>
-              <Reveal delay={0.1}>
-                <h2 className="font-display display-sm">
-                  Leaders to sync with.
-                </h2>
-              </Reveal>
+        <section className="relative mx-auto max-w-[1600px] px-6 md:px-20 py-20">
+          <Reveal>
+            <div className="label-xs text-[var(--color-fg-muted)]">
+              PEOPLE TO MEET
             </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <h2 className="mt-4 font-display text-3xl md:text-5xl max-w-3xl leading-tight">
+              Leaders to sync with.
+            </h2>
+          </Reveal>
 
-            <div className="md:col-span-8 grid md:grid-cols-2 gap-[var(--space-md)]">
-              <div className="stack-sm">
-                <div className="kicker text-[var(--color-accent)]">
-                  TUX GLOBAL
-                </div>
-                <div className="grid gap-[var(--space-2xs)]">
-                  {jayPlan.leaders.tuxGlobal.map((p) => (
-                    <PersonCard key={p.id} person={p} />
-                  ))}
-                </div>
+          <div className="mt-10 grid md:grid-cols-2 gap-10">
+            <div>
+              <div className="label-xs text-[var(--color-accent)] mb-4">
+                TUX GLOBAL
               </div>
-              <div className="stack-sm">
-                <div className="kicker text-[var(--color-accent)]">
-                  INDIA LEADERSHIP
-                </div>
-                <div className="grid gap-[var(--space-2xs)]">
-                  {jayPlan.leaders.indiaLeadership.map((p) => (
-                    <PersonCard key={p.id} person={p} />
-                  ))}
-                </div>
+              <div className="grid gap-3">
+                {jayPlan.leaders.tuxGlobal.map((p) => (
+                  <PersonCard key={p.id} person={p} />
+                ))}
+              </div>
+            </div>
+            <div>
+              <div className="label-xs text-[var(--color-accent)] mb-4">
+                INDIA LEADERSHIP
+              </div>
+              <div className="grid gap-3">
+                {jayPlan.leaders.indiaLeadership.map((p) => (
+                  <PersonCard key={p.id} person={p} />
+                ))}
               </div>
             </div>
           </div>
@@ -80,34 +76,34 @@ export function ChapterPage({ chapter }: { chapter: Chapter }) {
       )}
 
       {/* Chapter-to-chapter nav */}
-      <section className="relative shell section-y-sm border-t hairline">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-[var(--space-md)]">
+      <section className="relative mx-auto max-w-[1600px] px-6 md:px-20 py-24 border-t hairline">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           {prev ? (
             <Link
               href={`/${prev.slug}`}
               transitionTypes={["nav-back"]}
-              className="group flex items-center gap-[var(--space-sm)] text-left"
+              className="group flex items-center gap-4 text-left"
             >
               <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
               <div>
-                <div className="kicker tnum text-[var(--color-fg-muted)]">
+                <div className="label-xs text-[var(--color-fg-muted)]">
                   PREVIOUS · {prev.number}
                 </div>
-                <div className="subhead-sm mt-[var(--space-2xs)]">{prev.verb}.</div>
+                <div className="font-display text-xl mt-1">{prev.verb}.</div>
               </div>
             </Link>
           ) : (
             <Link
               href="/"
               transitionTypes={["nav-back"]}
-              className="group flex items-center gap-[var(--space-sm)] text-left"
+              className="group flex items-center gap-4 text-left"
             >
               <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
               <div>
-                <div className="kicker tnum text-[var(--color-fg-muted)]">
+                <div className="label-xs text-[var(--color-fg-muted)]">
                   PREVIOUS · 00
                 </div>
-                <div className="subhead-sm mt-[var(--space-2xs)]">Welcome.</div>
+                <div className="font-display text-xl mt-1">Welcome.</div>
               </div>
             </Link>
           )}
@@ -116,13 +112,13 @@ export function ChapterPage({ chapter }: { chapter: Chapter }) {
             <Link
               href={`/${next.slug}`}
               transitionTypes={["nav-forward"]}
-              className="group flex items-center gap-[var(--space-sm)] text-right"
+              className="group flex items-center gap-4 text-right"
             >
               <div>
-                <div className="kicker tnum text-[var(--color-fg-muted)]">
+                <div className="label-xs text-[var(--color-fg-muted)]">
                   NEXT · {next.number}
                 </div>
-                <div className="subhead-sm mt-[var(--space-2xs)]">{next.verb}.</div>
+                <div className="font-display text-xl mt-1">{next.verb}.</div>
               </div>
               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </Link>
@@ -131,8 +127,8 @@ export function ChapterPage({ chapter }: { chapter: Chapter }) {
       </section>
 
       <footer className="relative border-t hairline">
-        <div className="shell py-[var(--space-lg)] kicker tnum text-[var(--color-fg-muted)]">
-          Jay&apos;s Quarterly Onboarding &amp; Leadership Plan · Chapter {chapter.number}
+        <div className="mx-auto max-w-[1600px] px-6 md:px-20 py-12 label-xs text-[var(--color-fg-muted)]">
+          Jay's Quarterly Onboarding & Leadership Plan · Chapter {chapter.number}
         </div>
       </footer>
     </>

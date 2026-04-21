@@ -13,53 +13,51 @@ export default function WelcomePage() {
   return (
     <>
       {/* ========== HERO ========== */}
-      <section className="relative min-h-[88svh] flex flex-col overflow-hidden">
-        <div className="shell hero-pt pb-[var(--space-xl)] flex-1 flex flex-col justify-center">
-          <div className="stack-md">
-            <Reveal>
-              <div className="kicker text-[var(--color-accent)]">WELCOME</div>
-            </Reveal>
+      <section className="relative min-h-[100svh] overflow-hidden">
+        <div className="relative mx-auto max-w-[1600px] px-6 md:px-20 pt-40 md:pt-56 pb-24">
+          <Reveal>
+            <div className="label-xs text-[var(--color-accent)]">WELCOME</div>
+          </Reveal>
 
-            <Reveal delay={0.15}>
-              <h1 className="font-display display-lg">
-                Welcome,
-                <br />
-                <span className="italic text-[var(--color-accent)]">{person.firstName}.</span>
-              </h1>
-            </Reveal>
+          <Reveal delay={0.15}>
+            <h1 className="mt-6 font-display text-6xl md:text-[9rem] leading-[0.9] tracking-tight">
+              Welcome,
+              <br />
+              <span className="italic text-[var(--color-accent)]">{person.firstName}.</span>
+            </h1>
+          </Reveal>
 
-            <Reveal delay={0.35}>
-              <p className="lead-lg text-[var(--color-fg)]">
-                A 90-day onboarding and leadership plan — from the{" "}
-                <TrimbleDesignAPAC className="text-[var(--color-fg)]" /> team to our new{" "}
-                <span className="text-[var(--color-fg)]">Senior UX Design Manager.</span>
-              </p>
-            </Reveal>
+          <Reveal delay={0.35}>
+            <p className="mt-10 max-w-xl text-lg md:text-xl text-[var(--color-fg)]/85 leading-snug font-light">
+              A 90-day onboarding and leadership plan — from the{" "}
+              <TrimbleDesignAPAC className="text-[var(--color-fg)]" /> team to our new{" "}
+              <span className="text-[var(--color-fg)]">Senior UX Design Manager.</span>
+            </p>
+          </Reveal>
 
-            <Reveal delay={0.55}>
-              <div className="flex flex-wrap items-center gap-[var(--space-xs)] pt-[var(--space-sm)]">
-                <Link
-                  href="/learn"
-                  transitionTypes={["nav-forward"]}
-                  className="group inline-flex items-center gap-[var(--space-xs)] px-5 py-3 rounded-full glass-selected text-[var(--color-fg)] text-[length:var(--text-md)] font-semibold hover:brightness-110 transition"
-                >
-                  Begin Chapter 01
-                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <a
-                  href="#team"
-                  className="inline-flex items-center gap-[var(--space-xs)] px-5 py-3 rounded-full glass hover:bg-[var(--glass-highlight)] transition text-[length:var(--text-md)] font-semibold"
-                >
-                  <Compass size={18} weight="duotone" />
-                  Meet the team first
-                </a>
-              </div>
-            </Reveal>
-          </div>
+          <Reveal delay={0.55}>
+            <div className="mt-12 flex flex-wrap gap-3">
+              <Link
+                href="/learn"
+                transitionTypes={["nav-forward"]}
+                className="group inline-flex items-center gap-3 px-5 py-3 rounded-full glass-selected text-[var(--color-fg)] font-semibold hover:brightness-110 transition"
+              >
+                Begin Chapter 01
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <a
+                href="#team"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full glass hover:bg-[var(--glass-highlight)] transition text-sm"
+              >
+                <Compass size={16} weight="duotone" />
+                Meet the team first
+              </a>
+            </div>
+          </Reveal>
         </div>
 
         {/* Scroll hint */}
-        <div className="absolute bottom-[var(--space-md)] right-[var(--space-md)] kicker text-[var(--color-fg-muted)]">
+        <div className="absolute bottom-8 right-8 label-xs text-[var(--color-fg-muted)]">
           SCROLL ↓
         </div>
       </section>
@@ -70,10 +68,10 @@ export default function WelcomePage() {
           slides={[
             // 01 — About — huge brand lockup, left aligned
             <Slide key="about" index={0} total={4} kicker="ABOUT" align="left">
-              <h2 className="font-display display-lg max-w-5xl">
+              <h2 className="font-display text-5xl md:text-8xl leading-[0.95] max-w-5xl">
                 <TrimbleDesignAPAC />.
               </h2>
-              <p className="lead-lg mt-8 text-[var(--color-fg)]/85">
+              <p className="mt-10 max-w-2xl text-lg md:text-xl text-[var(--color-fg)]/80 leading-relaxed font-light">
                 {team.about}
               </p>
             </Slide>,
@@ -86,10 +84,10 @@ export default function WelcomePage() {
               kicker="MISSION"
               align="left"
             >
-              <h2 className="font-display display-md max-w-5xl">
+              <h2 className="font-display text-4xl md:text-7xl leading-[1.02] max-w-5xl">
                 {team.mission.title}
               </h2>
-              <p className="lead-md mt-8 text-[var(--color-fg-muted)]">
+              <p className="mt-10 max-w-2xl text-base md:text-lg text-[var(--color-fg-muted)] leading-relaxed font-light">
                 {team.mission.body}
               </p>
             </Slide>,
@@ -102,10 +100,10 @@ export default function WelcomePage() {
               kicker="VISION"
               align="left"
             >
-              <h2 className="font-display display-md max-w-5xl">
+              <h2 className="font-display text-4xl md:text-7xl leading-[1.02] max-w-5xl">
                 {team.vision.title}
               </h2>
-              <p className="lead-md mt-8 text-[var(--color-fg-muted)]">
+              <p className="mt-10 max-w-2xl text-base md:text-lg text-[var(--color-fg-muted)] leading-relaxed font-light">
                 {team.vision.body}
               </p>
             </Slide>,
@@ -118,7 +116,7 @@ export default function WelcomePage() {
               kicker="STRATEGY"
               align="left"
             >
-              <h2 className="font-display display-sm max-w-4xl">
+              <h2 className="font-display text-3xl md:text-5xl leading-tight max-w-4xl">
                 {team.strategy.title}
               </h2>
               <div className="mt-12 grid md:grid-cols-3 gap-4 w-full">
@@ -127,13 +125,13 @@ export default function WelcomePage() {
                     key={pillar.name}
                     className="glass-soft rounded-xl p-6 h-full"
                   >
-                    <div className="kicker tnum text-[var(--color-fg-muted)]">
+                    <div className="label-xs text-[var(--color-fg-muted)]">
                       {String(i + 1).padStart(2, "0")}
                     </div>
-                    <div className="subhead-sm mt-3">
+                    <div className="mt-2 font-display text-xl">
                       {pillar.name}
                     </div>
-                    <p className="body-sm mt-3 text-[var(--color-fg-muted)]">
+                    <p className="mt-3 text-sm text-[var(--color-fg-muted)] leading-relaxed">
                       {pillar.body}
                     </p>
                   </div>
@@ -145,19 +143,19 @@ export default function WelcomePage() {
       </section>
 
       {/* ========== YOUR CREW ========== */}
-      <section className="relative shell section-y-md">
+      <section className="relative mx-auto max-w-[1600px] px-6 md:px-20 py-32">
         <Reveal>
-          <div className="kicker text-[var(--color-fg-muted)]">YOUR CREW</div>
+          <div className="label-xs text-[var(--color-fg-muted)]">YOUR CREW</div>
         </Reveal>
         <Reveal delay={0.1}>
-          <h2 className="mt-[var(--space-sm)] font-display display-sm max-w-4xl">
+          <h2 className="mt-4 font-display text-4xl md:text-6xl max-w-4xl leading-tight">
             You report to Victor.
             <br />
             <span className="text-[var(--color-fg-muted)]">Nawaz &amp; Prashanth have your back.</span>
           </h2>
         </Reveal>
 
-        <div className="mt-[var(--space-lg)] grid md:grid-cols-3 gap-[var(--space-sm)] max-w-4xl">
+        <div className="mt-12 grid md:grid-cols-3 gap-4 max-w-4xl">
           <PersonCard person={person.reportsTo} />
           {person.buddies.map((b) => (
             <PersonCard key={b.id} person={b} />
@@ -166,19 +164,19 @@ export default function WelcomePage() {
       </section>
 
       {/* ========== CHAPTER NAV ========== */}
-      <section className="relative shell section-y-lg">
+      <section className="relative mx-auto max-w-[1600px] px-6 md:px-20 py-32">
         <Reveal>
-          <div className="kicker text-[var(--color-fg-muted)]">THE JOURNEY</div>
+          <div className="label-xs text-[var(--color-fg-muted)]">THE JOURNEY</div>
         </Reveal>
         <Reveal delay={0.1}>
-          <h2 className="mt-[var(--space-sm)] font-display display-sm max-w-4xl">
+          <h2 className="mt-4 font-display text-4xl md:text-6xl max-w-4xl leading-tight">
             Three chapters.
             <br />
             Ninety days.
           </h2>
         </Reveal>
 
-        <div className="mt-[var(--space-lg)] grid md:grid-cols-3 gap-[var(--space-md)]">
+        <div className="mt-16 grid md:grid-cols-3 gap-4">
           {chapters.map((c, i) => (
             <Reveal key={c.slug} delay={i * 0.1}>
               <Link
@@ -194,23 +192,23 @@ export default function WelcomePage() {
                   className="object-cover transition-transform duration-[900ms] group-hover:scale-105 opacity-80"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
-                <div className="absolute inset-0 p-[var(--space-md)] flex flex-col justify-between text-white">
+                <div className="absolute inset-0 p-6 flex flex-col justify-between text-white">
                   <div className="flex items-start justify-end">
-                    <div className="font-display display-xs tnum opacity-15">
+                    <div className="font-display text-6xl opacity-15 leading-none">
                       {c.number}
                     </div>
                   </div>
-                  <div className="stack-xs">
-                    <div className="kicker text-[var(--color-accent)]">
+                  <div>
+                    <div className="label-xs text-[var(--color-accent)] mb-2">
                       {c.duration}
                     </div>
-                    <div className="font-display display-xs">
+                    <div className="font-display text-3xl md:text-4xl leading-tight">
                       {c.verb}.
                     </div>
-                    <p className="body-sm opacity-85 max-w-[28ch]">
+                    <p className="mt-3 text-sm opacity-80 max-w-xs font-light">
                       {c.tagline}
                     </p>
-                    <div className="inline-flex items-center gap-[var(--space-2xs)] text-[length:var(--text-sm)] font-semibold pt-[var(--space-2xs)]">
+                    <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold">
                       Enter chapter
                       <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                     </div>
@@ -223,9 +221,9 @@ export default function WelcomePage() {
       </section>
 
       {/* ========== FOOTER ========== */}
-      <footer className="relative border-t hairline">
-        <div className="shell py-[var(--space-xl)]">
-          <p className="font-display display-xs max-w-[32ch]">
+      <footer className="relative border-t hairline mt-20">
+        <div className="mx-auto max-w-[1600px] px-6 md:px-20 py-16">
+          <p className="font-display text-2xl md:text-3xl max-w-xl leading-tight">
             Made for {person.firstName}, by the <TrimbleDesignAPAC /> team.
           </p>
         </div>

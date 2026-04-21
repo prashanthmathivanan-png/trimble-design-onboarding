@@ -142,10 +142,10 @@ export function Slide({
   return (
     <div className="relative h-full w-full flex">
       <div
-        className={`relative mx-auto w-full max-w-[var(--shell-max)] px-[var(--shell-x)] py-[var(--section-y-md)] flex flex-col justify-center ${alignClass}`}
+        className={`relative mx-auto max-w-[1400px] w-full px-6 md:px-20 py-16 md:py-24 flex flex-col justify-center ${alignClass}`}
       >
-        <div className="flex items-center gap-4 mb-6 kicker text-[var(--color-fg-muted)]">
-          <span className="tnum">
+        <div className="flex items-center gap-4 mb-6 label-xs text-[var(--color-fg-muted)]">
+          <span>
             {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
           </span>
           {kicker && (

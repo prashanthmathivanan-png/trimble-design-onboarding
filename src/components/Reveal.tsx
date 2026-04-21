@@ -33,7 +33,7 @@ export function Reveal({
           ? { opacity: 1, y: 0, filter: "blur(0px)" }
           : { opacity: 0, y, filter: "blur(8px)" }
       }
-      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </MotionTag>
