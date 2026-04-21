@@ -66,14 +66,14 @@ function Item({
         <span className="min-w-0 flex-1">
           <span
             className={clsx(
-              "block text-[15px] leading-snug",
+              "block leading-snug",
               isDone && "line-through text-[var(--color-fg-muted)]"
             )}
           >
             {item.label}
           </span>
           {item.hint && (
-            <span className="block text-xs mt-0.5 text-[var(--color-fg-muted)]">
+            <span className="block mt-1 text-[var(--color-fg-muted)] font-light">
               {item.hint}
             </span>
           )}
@@ -111,9 +111,9 @@ export function ChecklistGroupView({
             <div className="label-xs text-[var(--color-fg-muted)]">
               {String(index + 1).padStart(2, "0")} · {group.title.toUpperCase()}
             </div>
-            <div className="font-display text-2xl md:text-3xl mt-2">{group.title}</div>
+            <div className="type-heading mt-2">{group.title}</div>
             {group.blurb && (
-              <p className="mt-2 text-sm text-[var(--color-fg-muted)] max-w-xl">
+              <p className="mt-2 text-[var(--color-fg-muted)] max-w-xl font-light">
                 {group.blurb}
               </p>
             )}

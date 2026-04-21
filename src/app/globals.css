@@ -71,7 +71,44 @@ body::before {
     );
 }
 
-/* Utility: display type — Open Sans at heavy weights with tight tracking */
+/* ============================================================
+   TYPE SCALE — 4 tiers only.
+   Display · Heading · Body · Label.
+   Every piece of text on the site maps to exactly one of these.
+   Hierarchy inside a tier is expressed through weight and color,
+   never a new size.
+   ============================================================ */
+:root {
+  --text-display: clamp(2.75rem, 1.5rem + 7vw, 9rem);   /* 44 → 144px */
+  --text-heading: clamp(1.5rem, 0.75rem + 3vw, 2.75rem); /* 24 → 44px */
+  --text-body: 1rem;                                    /* 16px */
+  --text-label: 0.6875rem;                              /* 11px */
+}
+
+html,
+body {
+  font-size: var(--text-body);
+  line-height: 1.55;
+}
+
+.type-display {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: var(--text-display);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+
+.type-heading {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: var(--text-heading);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+/* Legacy alias — kept so existing `font-display` classes still work,
+   but no size is implied anymore. Prefer .type-display / .type-heading. */
 .font-display {
   font-family: var(--font-sans), system-ui, sans-serif;
   font-weight: 800;
@@ -84,11 +121,11 @@ body::before {
   letter-spacing: -0.01em;
 }
 
-/* Mono-ish label — Open Sans 600 uppercase tight-tracked substitutes monospace */
+/* Label tier — uppercase kickers and fine print */
 .label-xs {
   font-family: var(--font-sans), system-ui, sans-serif;
   font-weight: 600;
-  font-size: 11px;
+  font-size: var(--text-label);
   letter-spacing: 0.22em;
   text-transform: uppercase;
 }

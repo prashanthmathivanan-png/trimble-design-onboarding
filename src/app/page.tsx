@@ -20,7 +20,7 @@ export default function WelcomePage() {
           </Reveal>
 
           <Reveal delay={0.15}>
-            <h1 className="mt-6 font-display text-6xl md:text-[9rem] leading-[0.9] tracking-tight">
+            <h1 className="mt-6 type-display">
               Welcome,
               <br />
               <span className="italic text-[var(--color-accent)]">{person.firstName}.</span>
@@ -28,7 +28,7 @@ export default function WelcomePage() {
           </Reveal>
 
           <Reveal delay={0.35}>
-            <p className="mt-10 max-w-xl text-lg md:text-xl text-[var(--color-fg)]/85 leading-snug font-light">
+            <p className="mt-10 max-w-xl text-[var(--color-fg)]/85 font-light">
               A 90-day onboarding and leadership plan — from the{" "}
               <TrimbleDesignAPAC className="text-[var(--color-fg)]" /> team to our new{" "}
               <span className="text-[var(--color-fg)]">Senior UX Design Manager.</span>
@@ -47,7 +47,7 @@ export default function WelcomePage() {
               </Link>
               <a
                 href="#team"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full glass hover:bg-[var(--glass-highlight)] transition text-sm"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full glass hover:bg-[var(--glass-highlight)] transition"
               >
                 <Compass size={16} weight="duotone" />
                 Meet the team first
@@ -68,10 +68,10 @@ export default function WelcomePage() {
           slides={[
             // 01 — About — huge brand lockup, left aligned
             <Slide key="about" index={0} total={4} kicker="ABOUT" align="left">
-              <h2 className="font-display text-5xl md:text-8xl leading-[0.95] max-w-5xl">
+              <h2 className="type-display max-w-5xl">
                 <TrimbleDesignAPAC />.
               </h2>
-              <p className="mt-10 max-w-2xl text-lg md:text-xl text-[var(--color-fg)]/80 leading-relaxed font-light">
+              <p className="mt-10 max-w-2xl text-[var(--color-fg)]/80 font-light">
                 {team.about}
               </p>
             </Slide>,
@@ -84,10 +84,10 @@ export default function WelcomePage() {
               kicker="MISSION"
               align="left"
             >
-              <h2 className="font-display text-4xl md:text-7xl leading-[1.02] max-w-5xl">
+              <h2 className="type-heading max-w-5xl">
                 {team.mission.title}
               </h2>
-              <p className="mt-10 max-w-2xl text-base md:text-lg text-[var(--color-fg-muted)] leading-relaxed font-light">
+              <p className="mt-10 max-w-2xl text-[var(--color-fg-muted)] font-light">
                 {team.mission.body}
               </p>
             </Slide>,
@@ -100,10 +100,10 @@ export default function WelcomePage() {
               kicker="VISION"
               align="left"
             >
-              <h2 className="font-display text-4xl md:text-7xl leading-[1.02] max-w-5xl">
+              <h2 className="type-heading max-w-5xl">
                 {team.vision.title}
               </h2>
-              <p className="mt-10 max-w-2xl text-base md:text-lg text-[var(--color-fg-muted)] leading-relaxed font-light">
+              <p className="mt-10 max-w-2xl text-[var(--color-fg-muted)] font-light">
                 {team.vision.body}
               </p>
             </Slide>,
@@ -116,7 +116,7 @@ export default function WelcomePage() {
               kicker="STRATEGY"
               align="left"
             >
-              <h2 className="font-display text-3xl md:text-5xl leading-tight max-w-4xl">
+              <h2 className="type-heading max-w-4xl">
                 {team.strategy.title}
               </h2>
               <div className="mt-12 grid md:grid-cols-3 gap-4 w-full">
@@ -128,10 +128,10 @@ export default function WelcomePage() {
                     <div className="label-xs text-[var(--color-fg-muted)]">
                       {String(i + 1).padStart(2, "0")}
                     </div>
-                    <div className="mt-2 font-display text-xl">
+                    <div className="mt-2 font-semibold">
                       {pillar.name}
                     </div>
-                    <p className="mt-3 text-sm text-[var(--color-fg-muted)] leading-relaxed">
+                    <p className="mt-3 text-[var(--color-fg-muted)] font-light">
                       {pillar.body}
                     </p>
                   </div>
@@ -148,7 +148,7 @@ export default function WelcomePage() {
           <div className="label-xs text-[var(--color-fg-muted)]">YOUR CREW</div>
         </Reveal>
         <Reveal delay={0.1}>
-          <h2 className="mt-4 font-display text-4xl md:text-6xl max-w-4xl leading-tight">
+          <h2 className="mt-4 type-heading max-w-4xl">
             You report to Victor.
             <br />
             <span className="text-[var(--color-fg-muted)]">Nawaz &amp; Prashanth have your back.</span>
@@ -169,7 +169,7 @@ export default function WelcomePage() {
           <div className="label-xs text-[var(--color-fg-muted)]">THE JOURNEY</div>
         </Reveal>
         <Reveal delay={0.1}>
-          <h2 className="mt-4 font-display text-4xl md:text-6xl max-w-4xl leading-tight">
+          <h2 className="mt-4 type-heading max-w-4xl">
             Three chapters.
             <br />
             Ninety days.
@@ -194,7 +194,7 @@ export default function WelcomePage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
                 <div className="absolute inset-0 p-6 flex flex-col justify-between text-white">
                   <div className="flex items-start justify-end">
-                    <div className="font-display text-6xl opacity-15 leading-none">
+                    <div className="type-heading opacity-15">
                       {c.number}
                     </div>
                   </div>
@@ -202,13 +202,13 @@ export default function WelcomePage() {
                     <div className="label-xs text-[var(--color-accent)] mb-2">
                       {c.duration}
                     </div>
-                    <div className="font-display text-3xl md:text-4xl leading-tight">
+                    <div className="type-heading">
                       {c.verb}.
                     </div>
-                    <p className="mt-3 text-sm opacity-80 max-w-xs font-light">
+                    <p className="mt-3 opacity-80 max-w-xs font-light">
                       {c.tagline}
                     </p>
-                    <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold">
+                    <div className="mt-5 inline-flex items-center gap-2 font-semibold">
                       Enter chapter
                       <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                     </div>
@@ -223,7 +223,7 @@ export default function WelcomePage() {
       {/* ========== FOOTER ========== */}
       <footer className="relative border-t hairline mt-20">
         <div className="mx-auto max-w-[1600px] px-6 md:px-20 py-16">
-          <p className="font-display text-2xl md:text-3xl max-w-xl leading-tight">
+          <p className="type-heading max-w-xl">
             Made for {person.firstName}, by the <TrimbleDesignAPAC /> team.
           </p>
         </div>

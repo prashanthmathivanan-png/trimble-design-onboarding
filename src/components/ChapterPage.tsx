@@ -45,7 +45,7 @@ export function ChapterPage({ chapter }: { chapter: Chapter }) {
             </div>
           </Reveal>
           <Reveal delay={0.1}>
-            <h2 className="mt-4 font-display text-3xl md:text-5xl max-w-3xl leading-tight">
+            <h2 className="mt-4 type-heading max-w-3xl">
               Leaders to sync with.
             </h2>
           </Reveal>
@@ -89,7 +89,7 @@ export function ChapterPage({ chapter }: { chapter: Chapter }) {
                 <div className="label-xs text-[var(--color-fg-muted)]">
                   PREVIOUS · {prev.number}
                 </div>
-                <div className="font-display text-xl mt-1">{prev.verb}.</div>
+                <div className="font-semibold mt-1">{prev.verb}.</div>
               </div>
             </Link>
           ) : (
@@ -103,7 +103,7 @@ export function ChapterPage({ chapter }: { chapter: Chapter }) {
                 <div className="label-xs text-[var(--color-fg-muted)]">
                   PREVIOUS · 00
                 </div>
-                <div className="font-display text-xl mt-1">Welcome.</div>
+                <div className="font-semibold mt-1">Welcome.</div>
               </div>
             </Link>
           )}
@@ -118,7 +118,7 @@ export function ChapterPage({ chapter }: { chapter: Chapter }) {
                 <div className="label-xs text-[var(--color-fg-muted)]">
                   NEXT · {next.number}
                 </div>
-                <div className="font-display text-xl mt-1">{next.verb}.</div>
+                <div className="font-semibold mt-1">{next.verb}.</div>
               </div>
               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </Link>

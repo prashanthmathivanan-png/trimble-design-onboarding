@@ -15,10 +15,10 @@ export function PersonCard({ person }: { person: Person }) {
         />
       </div>
       <div className="min-w-0">
-        <div className="font-medium text-[15px] leading-tight">{person.name}</div>
-        <div className="text-xs text-[var(--color-fg-muted)] mt-1">{person.role}</div>
+        <div className="font-semibold leading-tight">{person.name}</div>
+        <div className="text-[var(--color-fg-muted)] mt-1 font-light">{person.role}</div>
         {person.note && (
-          <div className="text-xs text-[var(--color-fg)]/70 mt-2 italic leading-snug">
+          <div className="text-[var(--color-fg)]/70 mt-2 italic font-light leading-snug">
             {person.note}
           </div>
         )}
