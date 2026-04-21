@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { Reveal } from "./Reveal";
 
 type Props = {
@@ -22,8 +24,16 @@ export function ChapterHero({
   summary,
   heroImage,
 }: Props) {
+  // B3 — ghost number drifts slower than the page scroll for subtle depth.
+  const heroRef = useRef<HTMLDivElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const ghostY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+
   return (
-    <section className="relative min-h-[92vh] overflow-hidden">
+    <section ref={heroRef} className="relative min-h-[92vh] overflow-hidden">
       <Image
         src={heroImage}
         alt=""
@@ -45,9 +55,12 @@ export function ChapterHero({
       <div className="relative mx-auto max-w-[1600px] px-6 md:px-20 pt-40 md:pt-56 pb-20">
         <div className="flex items-start gap-8 mb-6">
           <Reveal>
-            <div className="type-display opacity-15 select-none">
+            <motion.div
+              style={{ y: ghostY }}
+              className="type-display opacity-15 select-none will-change-transform"
+            >
               {number}
-            </div>
+            </motion.div>
           </Reveal>
           <Reveal delay={0.1}>
             <div className="pt-4">

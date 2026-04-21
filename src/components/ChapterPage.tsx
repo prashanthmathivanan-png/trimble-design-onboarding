@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { ChapterHero } from "./ChapterHero";
 import { ChecklistGroupView } from "./Checklist";
+import { ChapterCompleteLetter } from "./ChapterCompleteLetter";
 import { Reveal } from "./Reveal";
 import { PersonCard } from "./PersonCard";
 import { jayPlan, type Chapter } from "@/data/jay-plan";
@@ -35,6 +36,9 @@ export function ChapterPage({ chapter }: { chapter: Chapter }) {
           ))}
         </div>
       </section>
+
+      {/* A3 — Letter from the team when the entire chapter is complete */}
+      <ChapterCompleteLetter chapter={chapter} />
 
       {/* Leaders callout (Learn chapter only) */}
       {showLeaders && (

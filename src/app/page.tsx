@@ -5,6 +5,9 @@ import { Reveal } from "@/components/Reveal";
 import { PersonCard } from "@/components/PersonCard";
 import { TrimbleDesignAPAC } from "@/components/TrimbleDesignAPAC";
 import { SlideReel, Slide } from "@/components/SlideReel";
+import { ScrollHint } from "@/components/ScrollHint";
+import { Greeting } from "@/components/Greeting";
+import { SignedBy } from "@/components/SignedBy";
 import { jayPlan } from "@/data/jay-plan";
 
 export default function WelcomePage() {
@@ -21,9 +24,7 @@ export default function WelcomePage() {
 
           <Reveal delay={0.15}>
             <h1 className="mt-6 type-display">
-              Welcome,
-              <br />
-              <span className="italic text-[var(--color-accent)]">{person.firstName}.</span>
+              <Greeting firstName={person.firstName} />
             </h1>
           </Reveal>
 
@@ -56,10 +57,7 @@ export default function WelcomePage() {
           </Reveal>
         </div>
 
-        {/* Scroll hint */}
-        <div className="absolute bottom-8 right-8 label-xs text-[var(--color-fg-muted)]">
-          SCROLL ↓
-        </div>
+        <ScrollHint />
       </section>
 
       {/* ========== SLIDE REEL: About / Mission / Vision / Strategy ========== */}
@@ -226,6 +224,7 @@ export default function WelcomePage() {
           <p className="type-heading max-w-xl">
             Made for {person.firstName}, by the <TrimbleDesignAPAC /> team.
           </p>
+          <SignedBy />
         </div>
       </footer>
     </>

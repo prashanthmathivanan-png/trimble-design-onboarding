@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { SiteHeader } from "@/components/SiteHeader";
 import { ThemeToggleFloat } from "@/components/ThemeToggleFloat";
+import { KeyboardShortcuts } from "@/components/KeyboardShortcuts";
 
 const openSans = Open_Sans({
   variable: "--font-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
           <SiteHeader />
           <main className="relative">{children}</main>
           <ThemeToggleFloat />
+          <KeyboardShortcuts />
         </ThemeProvider>
       </body>
     </html>

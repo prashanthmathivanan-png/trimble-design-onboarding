@@ -11,31 +11,36 @@
   --font-sans: var(--font-sans);
 }
 
+/* Palette aligned to Trimble Brand Guidelines v8.0 (Feb 2025)
+   Hero Gray 10 #252A2E · Gray 11 #171C1E · Gray -1 #F1F1F6
+   Gold 10 #FBAD26 · Blue 10 #0063A3 · Gray 4 #90939F · Gray 7 #585C65 */
 :root,
 html.dark {
   color-scheme: dark;
-  --bg: #0a0b0d;
-  --bg-elev: #16181d;
-  --fg: #f5f5f7;
-  --fg-muted: #a7a9b3;
-  --accent: #ffb347;
-  --line: rgb(255 255 255 / 0.1);
-  --glass-bg: rgb(30 33 40 / 0.7);
-  --glass-border: rgb(255 255 255 / 0.14);
-  --glass-highlight: rgb(255 255 255 / 0.08);
+  --bg: #171C1E;        /* Trimble Gray 11 */
+  --bg-elev: #252A2E;   /* Trimble Hero Gray 10 */
+  --fg: #F1F1F6;        /* Trimble Gray -1 */
+  --fg-muted: #A3A6B1;  /* Trimble Gray 3 (soft, legible on hero gray) */
+  --accent: #FBAD26;    /* Trimble Gold 10 */
+  --accent-secondary: #0063A3; /* Trimble Blue 10 (used rarely) */
+  --line: rgb(241 241 246 / 0.1);
+  --glass-bg: rgb(37 42 46 / 0.72);
+  --glass-border: rgb(241 241 246 / 0.14);
+  --glass-highlight: rgb(241 241 246 / 0.08);
 }
 
 html.light {
   color-scheme: light;
-  --bg: #f5f4ef;
-  --bg-elev: #ffffff;
-  --fg: #131417;
-  --fg-muted: #5a5c66;
-  --accent: #c96a2c;
-  --line: rgb(0 0 0 / 0.08);
-  --glass-bg: rgb(255 255 255 / 0.55);
-  --glass-border: rgb(0 0 0 / 0.08);
-  --glass-highlight: rgb(0 0 0 / 0.04);
+  --bg: #F1F1F6;        /* Trimble Gray -1 */
+  --bg-elev: #FFFFFF;
+  --fg: #252A2E;        /* Trimble Hero Gray 10 */
+  --fg-muted: #585C65;  /* Trimble Gray 7 */
+  --accent: #FBAD26;    /* Trimble Gold 10 — same in both modes */
+  --accent-secondary: #0063A3;
+  --line: rgb(37 42 46 / 0.1);
+  --glass-bg: rgb(255 255 255 / 0.6);
+  --glass-border: rgb(37 42 46 / 0.08);
+  --glass-highlight: rgb(37 42 46 / 0.04);
 }
 
 html,
@@ -266,4 +271,103 @@ html.lenis body {
 }
 .lenis.lenis-stopped {
   overflow: hidden;
+}
+
+/* ============================================================
+   DELIGHT — micro-interactions, celebrations, and polish.
+   All motion is subtle, on-brand ("confidence at every turn"),
+   and honors prefers-reduced-motion.
+   ============================================================ */
+
+/* Row shimmer — 180ms warm accent sweep across a just-checked item */
+@keyframes row-shimmer {
+  0% { opacity: 0; transform: translateX(-20%); }
+  30% { opacity: 0.55; }
+  100% { opacity: 0; transform: translateX(110%); }
+}
+
+/* Animated strike-through line that draws left→right */
+@keyframes strike-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Checkbox icon — a single settled overshoot (NOT a bounce) */
+@keyframes check-settle {
+  0% { transform: scale(0.82); }
+  55% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Scroll-hint bob — teaches the scroll gesture until first scroll */
+@keyframes scroll-hint-bob {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(4px); opacity: 1; }
+}
+.scroll-hint-bob {
+  animation: scroll-hint-bob 1.8s ease-in-out infinite;
+}
+
+/* Progress-bar completion pulse — one-shot accent glow at 100% */
+@keyframes progress-pulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent) 55%, transparent); }
+  80% { box-shadow: 0 0 0 14px color-mix(in oklch, var(--accent) 0%, transparent); }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+.progress-just-complete {
+  animation: progress-pulse 1.2s ease-out 1;
+}
+
+/* Letter rise-in — chapter completion message */
+@keyframes letter-rise {
+  from { opacity: 0; transform: translateY(18px); filter: blur(6px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+.letter-rise {
+  animation: letter-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* View-Transition theme swap: radial wipe from toggle button origin.
+   Uses CSS variables set imperatively in JS (--vt-x / --vt-y).
+   The old frame holds its opacity; the new frame clips over it. */
+::view-transition-old(theme-swap) {
+  animation: none;
+  opacity: 1;
+}
+::view-transition-new(theme-swap) {
+  animation: theme-swap-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  mix-blend-mode: normal;
+}
+@keyframes theme-swap-in {
+  from { clip-path: circle(0% at var(--vt-x, 50%) var(--vt-y, 100%)); }
+  to   { clip-path: circle(150% at var(--vt-x, 50%) var(--vt-y, 100%)); }
+}
+
+/* Keyboard-shortcut sheet */
+@keyframes kbd-fade {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.kbd-enter { animation: kbd-fade 220ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Signed-by credit lines — staggered fade */
+@keyframes sig-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.sig-line { animation: sig-fade 520ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Respect reduced-motion across ALL delight animations */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint-bob,
+  .progress-just-complete,
+  .letter-rise,
+  .kbd-enter,
+  .sig-line {
+    animation: none !important;
+  }
+  ::view-transition-new(theme-swap),
+  ::view-transition-old(theme-swap) {
+    animation: none !important;
+  }
 }
