@@ -52,22 +52,25 @@ export function SignedBy() {
         />
       </button>
 
+      {/* Fade + lift only — no height interpolation. Animating height to
+          "auto" forces per-frame layout recalc across 16 children, which
+          was the main source of lag when expanding. Opacity + transform
+          are compositor-only and ~free. */}
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
             key="sigs"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="mt-6 grid gap-4 max-w-md">
               {SIGNATORIES.map((s, i) => (
                 <div
                   key={s.name}
                   className="sig-line flex items-baseline gap-3"
-                  style={{ animationDelay: `${i * 110}ms` }}
+                  style={{ animationDelay: `${i * 28}ms` }}
                 >
                   <span className="italic text-[var(--accent)]">
                     {s.name}
@@ -81,7 +84,7 @@ export function SignedBy() {
               ))}
               <p
                 className="sig-line mt-3 text-[var(--color-fg-muted)] italic max-w-sm"
-                style={{ animationDelay: `${SIGNATORIES.length * 110}ms` }}
+                style={{ animationDelay: `${SIGNATORIES.length * 28 + 60}ms` }}
               >
                 Sixteen of us made it. It&apos;s yours to run.
               </p>
