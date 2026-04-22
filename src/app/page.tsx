@@ -8,6 +8,7 @@ import { SlideReel, Slide } from "@/components/SlideReel";
 import { ScrollHint } from "@/components/ScrollHint";
 import { Greeting } from "@/components/Greeting";
 import { SignedBy } from "@/components/SignedBy";
+import { BrandCurve } from "@/components/BrandCurve";
 import { jayPlan } from "@/data/jay-plan";
 
 export default function WelcomePage() {
@@ -17,6 +18,9 @@ export default function WelcomePage() {
     <>
       {/* ========== HERO ========== */}
       <section className="relative min-h-[100svh] overflow-hidden">
+        {/* Brand curve motif — "confidence at every turn" */}
+        <BrandCurve variant="hero" tone="accent" />
+
         <div className="relative mx-auto max-w-[1600px] px-6 md:px-20 pt-40 md:pt-56 pb-24">
           <Reveal>
             <div className="label-xs text-[var(--color-accent-secondary)]">CHAPTER 00</div>
@@ -174,7 +178,13 @@ export default function WelcomePage() {
           </h2>
         </Reveal>
 
-        <div className="mt-16 grid md:grid-cols-3 gap-4">
+        <Reveal delay={0.2}>
+          <div className="mt-16 mb-6 md:mb-8">
+            <BrandCurve variant="journey" tone="accent" />
+          </div>
+        </Reveal>
+
+        <div className="grid md:grid-cols-3 gap-4">
           {chapters.map((c, i) => (
             <Reveal key={c.slug} delay={i * 0.1}>
               <Link
