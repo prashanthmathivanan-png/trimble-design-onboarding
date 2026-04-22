@@ -53,8 +53,11 @@ export function SlideReel({ slides }: { slides: ReactNode[] }) {
   };
 
   return (
-    <section className="relative min-h-[100svh] flex flex-col">
-      <div className="relative flex-1 overflow-hidden">
+    <section className="relative">
+      {/* Explicit height on the slides viewport so each Slide's
+          justify-end has a real container to anchor against. Reserves
+          ~120px below for the pagination pill + bottom spacing. */}
+      <div className="relative h-[calc(100svh-7.5rem)] overflow-hidden">
         <motion.div
           className="flex h-full will-change-transform cursor-grab active:cursor-grabbing"
           style={{ width: `${n * 100}%` }}
@@ -83,12 +86,14 @@ export function SlideReel({ slides }: { slides: ReactNode[] }) {
         </motion.div>
       </div>
 
-      {/* Dot pill pagination */}
-      <div className="relative pb-12 flex justify-center">
+      {/* Dot pill pagination — left-aligned to the content gutter
+          so the dots read as the bottom of the content column, not
+          a centered island floating below it. */}
+      <div className="relative mx-auto max-w-[1400px] w-full px-6 md:px-20 pt-6 pb-12 md:pb-16">
         <div
           role="tablist"
           aria-label="Carousel slides"
-          className="surface rounded-full px-4 py-3 flex items-center gap-3"
+          className="surface rounded-full px-4 py-3 flex items-center gap-3 w-fit"
         >
           {Array.from({ length: n }).map((_, i) => {
             const isActive = i === active;
@@ -143,7 +148,7 @@ export function Slide({
   return (
     <div className="relative h-full w-full flex">
       <div
-        className={`relative mx-auto max-w-[1400px] w-full px-6 md:px-20 py-16 md:py-24 flex flex-col justify-center ${alignClass}`}
+        className={`relative mx-auto max-w-[1400px] w-full h-full px-6 md:px-20 pt-32 md:pt-40 pb-6 md:pb-8 flex flex-col justify-end ${alignClass}`}
       >
         <div className="flex items-center gap-4 mb-6 label-xs text-[var(--color-fg-muted)]">
           <span>

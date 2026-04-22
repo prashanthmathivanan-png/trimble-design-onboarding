@@ -22,18 +22,14 @@ export default function WelcomePage() {
         <BrandCurve variant="hero" tone="accent" />
 
         <div className="relative mx-auto max-w-[1600px] px-6 md:px-20 pt-40 md:pt-56 pb-24">
-          <Reveal>
-            <div className="label-xs text-[var(--color-accent-secondary)]">CHAPTER 00</div>
-          </Reveal>
-
           <Reveal delay={0.15}>
-            <h1 className="mt-6 type-display">
+            <h1 className="type-display">
               <Greeting firstName={person.firstName} />
             </h1>
           </Reveal>
 
           <Reveal delay={0.35}>
-            <p className="type-lead mt-10 max-w-xl text-[var(--color-fg)]/90">
+            <p className="type-lead mt-20 md:mt-24 max-w-xl text-[var(--color-fg)]/90">
               A 90-day onboarding and leadership plan — from the{" "}
               <TrimbleDesignAPAC className="text-[var(--color-fg)]" /> team to our new{" "}
               <span className="text-[var(--color-fg)]">Senior UX Design Manager.</span>
@@ -68,12 +64,12 @@ export default function WelcomePage() {
       <section id="team">
         <SlideReel
           slides={[
-            // 01 — About — huge brand lockup, left aligned
+            // 01 — About
             <Slide key="about" index={0} total={4} kicker="ABOUT" align="left">
-              <h2 className="type-display max-w-5xl">
+              <h2 className="type-heading max-w-5xl">
                 <TrimbleDesignAPAC />.
               </h2>
-              <p className="type-lead mt-10 max-w-2xl text-[var(--color-fg)]/85">
+              <p className="type-lead mt-8 max-w-2xl text-[var(--color-fg)]/85">
                 {team.about}
               </p>
             </Slide>,
@@ -89,7 +85,7 @@ export default function WelcomePage() {
               <h2 className="type-heading max-w-5xl">
                 {team.mission.title}
               </h2>
-              <p className="mt-10 max-w-2xl text-[var(--color-fg-muted)]">
+              <p className="type-lead mt-8 max-w-2xl text-[var(--color-fg)]/85">
                 {team.mission.body}
               </p>
             </Slide>,
@@ -105,7 +101,7 @@ export default function WelcomePage() {
               <h2 className="type-heading max-w-5xl">
                 {team.vision.title}
               </h2>
-              <p className="mt-10 max-w-2xl text-[var(--color-fg-muted)]">
+              <p className="type-lead mt-8 max-w-2xl text-[var(--color-fg)]/85">
                 {team.vision.body}
               </p>
             </Slide>,
