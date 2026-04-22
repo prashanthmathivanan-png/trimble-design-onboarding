@@ -157,10 +157,10 @@ export default function WelcomePage() {
           </h2>
         </Reveal>
 
-        <div className="mt-12 grid md:grid-cols-3 gap-4 max-w-4xl">
-          <PersonCard person={person.reportsTo} />
+        <div className="mt-12 grid md:grid-cols-3 gap-4 md:gap-6 max-w-5xl">
+          <PersonCard person={person.reportsTo} variant="featured" />
           {person.buddies.map((b) => (
-            <PersonCard key={b.id} person={b} />
+            <PersonCard key={b.id} person={b} variant="featured" />
           ))}
         </div>
       </section>
