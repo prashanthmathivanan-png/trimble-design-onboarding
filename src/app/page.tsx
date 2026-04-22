@@ -41,14 +41,14 @@ export default function WelcomePage() {
               <Link
                 href="/learn"
                 transitionTypes={["nav-forward"]}
-                className="group inline-flex items-center gap-3 px-5 py-3 rounded-full glass-selected text-[var(--color-fg)] font-semibold hover:brightness-110 transition"
+                className="group inline-flex items-center gap-3 px-5 py-3 rounded-full bg-[var(--color-accent)] text-[#252A2E] font-semibold hover:brightness-95 transition"
               >
                 Begin Chapter 01
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </Link>
               <a
                 href="#team"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full glass hover:bg-[var(--glass-highlight)] transition"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-[var(--color-line)] text-[var(--color-fg)] hover:bg-[var(--color-bg-elev)] transition"
               >
                 <Compass size={16} weight="duotone" />
                 Meet the team first
@@ -117,11 +117,11 @@ export default function WelcomePage() {
               <h2 className="type-heading max-w-4xl">
                 {team.strategy.title}
               </h2>
-              <div className="mt-12 grid md:grid-cols-3 gap-4 w-full">
+              <div className="mt-12 grid md:grid-cols-3 gap-10 md:gap-8 w-full">
                 {team.strategy.pillars.map((pillar, i) => (
                   <div
                     key={pillar.name}
-                    className="glass-soft rounded-xl p-6 h-full"
+                    className="pt-6 border-t border-[var(--color-line)]"
                   >
                     <div className="label-xs text-[var(--color-fg-muted)]">
                       {String(i + 1).padStart(2, "0")}

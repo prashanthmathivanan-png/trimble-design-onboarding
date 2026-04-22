@@ -95,7 +95,7 @@ export function ChapterCompleteLetter({ chapter }: { chapter: Chapter }) {
       className="relative mx-auto max-w-[1600px] px-6 md:px-20 py-16"
     >
       <div
-        className="letter-rise glass-soft rounded-2xl p-8 md:p-12 max-w-3xl relative overflow-hidden"
+        className="letter-rise rounded-2xl p-8 md:p-12 max-w-3xl relative overflow-hidden border border-[var(--color-line)]"
         style={{
           background:
             "linear-gradient(135deg, color-mix(in oklch, var(--accent) 10%, var(--bg-elev)) 0%, var(--bg-elev) 65%)",
@@ -104,7 +104,7 @@ export function ChapterCompleteLetter({ chapter }: { chapter: Chapter }) {
         <button
           onClick={onDismiss}
           aria-label="Dismiss letter"
-          className="absolute top-4 right-4 w-8 h-8 grid place-items-center rounded-full hover:bg-[var(--glass-highlight)] text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition"
+          className="absolute top-4 right-4 w-8 h-8 grid place-items-center rounded-full hover:bg-[var(--color-bg)] text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition"
         >
           <X size={16} />
         </button>

@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { CheckCircle, Circle } from "@phosphor-icons/react";
 import { motion, AnimatePresence } from "motion/react";
 import clsx from "clsx";
-import { GlassPanel } from "./GlassPanel";
+import { Panel } from "./Panel";
 import { Reveal } from "./Reveal";
 import type { ChecklistGroup, ChecklistItem } from "@/data/jay-plan";
 import { flatIds, useProgress } from "@/hooks/useProgress";
@@ -161,7 +161,7 @@ export function ChecklistGroupView({
 
   return (
     <Reveal>
-      <GlassPanel className="h-full flex flex-col">
+      <Panel className="h-full flex flex-col">
         <div className="flex items-start justify-between gap-4 mb-4">
           <div>
             <div className="label-xs text-[var(--color-fg-muted)]">
@@ -215,7 +215,7 @@ export function ChecklistGroupView({
             <Item key={item.id} item={item} done={done} onToggle={toggle} />
           ))}
         </div>
-      </GlassPanel>
+      </Panel>
     </Reveal>
   );
 }

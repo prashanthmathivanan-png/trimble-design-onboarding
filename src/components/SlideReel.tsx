@@ -88,7 +88,7 @@ export function SlideReel({ slides }: { slides: ReactNode[] }) {
         <div
           role="tablist"
           aria-label="Carousel slides"
-          className="glass-bare rounded-full px-4 py-3 flex items-center gap-3"
+          className="surface rounded-full px-4 py-3 flex items-center gap-3"
         >
           {Array.from({ length: n }).map((_, i) => {
             const isActive = i === active;
