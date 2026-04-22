@@ -45,7 +45,7 @@ export function PersonCard({
             {person.role}
           </div>
           {person.note && (
-            <div className="text-[var(--color-fg)]/85 mt-4 italic font-light leading-snug text-sm border-t border-[var(--color-line)] pt-4">
+            <div className="text-[var(--color-fg)]/85 mt-4 italic leading-snug text-sm border-t border-[var(--color-line)] pt-4">
               {person.note}
             </div>
           )}
@@ -69,7 +69,7 @@ export function PersonCard({
         <div className="font-semibold leading-tight">{person.name}</div>
         <div className="text-[var(--color-fg-muted)] mt-1 text-sm">{person.role}</div>
         {person.note && (
-          <div className="text-[var(--color-fg)]/80 mt-2 italic font-light leading-snug text-sm">
+          <div className="text-[var(--color-fg)]/80 mt-2 italic leading-snug text-sm">
             {person.note}
           </div>
         )}
