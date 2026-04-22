@@ -17,11 +17,15 @@ export default function WelcomePage() {
   return (
     <>
       {/* ========== HERO ========== */}
-      <section className="relative min-h-[100svh] overflow-hidden">
+      {/* Flex-centered so content doesn't leave a dead band of whitespace
+          at the bottom on taller viewports (previously visible on MBP
+          13"/14" at 100svh). ScrollHint is absolutely positioned, so
+          centering the content column doesn't displace it. */}
+      <section className="relative min-h-[100svh] overflow-hidden flex flex-col justify-center">
         {/* Brand curve motif — "confidence at every turn" */}
         <BrandCurve variant="hero" tone="accent" />
 
-        <div className="relative mx-auto max-w-[1600px] px-6 md:px-20 pt-40 md:pt-56 pb-24">
+        <div className="relative mx-auto max-w-[1600px] w-full px-6 md:px-20 py-24">
           <Reveal delay={0.15}>
             <h1 className="type-display">
               <Greeting firstName={person.firstName} />
@@ -29,7 +33,7 @@ export default function WelcomePage() {
           </Reveal>
 
           <Reveal delay={0.35}>
-            <p className="type-lead mt-20 md:mt-24 max-w-xl text-[var(--color-fg)]/90">
+            <p className="type-lead mt-6 md:mt-8 max-w-xl text-[var(--color-fg)]/90">
               A 90-day onboarding and leadership plan — from the{" "}
               <TrimbleDesignAPAC className="text-[var(--color-fg)]" /> team to our new{" "}
               <span className="text-[var(--color-fg)]">Senior UX Design Manager.</span>
@@ -37,7 +41,7 @@ export default function WelcomePage() {
           </Reveal>
 
           <Reveal delay={0.55}>
-            <div className="mt-12 flex flex-wrap gap-3">
+            <div className="mt-10 flex flex-wrap gap-3">
               <Link
                 href="/learn"
                 transitionTypes={["nav-forward"]}

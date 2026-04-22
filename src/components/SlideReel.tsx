@@ -1,99 +1,119 @@
 "use client";
 
-import { useCallback, useEffect, useState, type ReactNode } from "react";
-import { motion, useReducedMotion, type PanInfo } from "motion/react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  motion,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "motion/react";
 
 /**
- * SlideReel — a single-viewport horizontal carousel.
+ * SlideReel — scroll-pinned storytelling section.
  *
- * The section occupies one screen (no scroll-jacking). The user advances
- * through slides via:
- *   - Clicking a dot in the pill pagination
- *   - Arrow keys (← / →)
- *   - Dragging / swiping the slide horizontally
+ * Layout:
+ *   - Outer wrapper has height = n × 100vh (the "scroll runway").
+ *   - An inner sticky element pins at the top of the viewport for that
+ *     entire runway, so as the user scrolls, the viewport stays locked
+ *     on this section while each slide takes its turn.
+ *   - Every slide is absolutely stacked inside the sticky container;
+ *     opacity + translateY are driven by scroll progress (compositor-
+ *     only, so no frame cost).
+ *   - Dot pagination sits on the right edge, vertical. Each dot
+ *     scroll-jumps to its slide's "home" position.
  *
- * Reduced motion: transitions become instant, drag still works.
+ * Once all n slides are consumed, natural scroll continues to the next
+ * section. Keyboard ArrowDown/ArrowUp jump between slides.
  */
 export function SlideReel({ slides }: { slides: ReactNode[] }) {
   const n = slides.length;
+  const wrapperRef = useRef<HTMLElement | null>(null);
   const [active, setActive] = useState(0);
   const reduced = useReducedMotion();
 
+  const { scrollYProgress } = useScroll({
+    target: wrapperRef,
+    offset: ["start start", "end end"],
+  });
+
+  // Map continuous scroll progress → integer active slide (for dot
+  // highlights and a11y labels). Guard against updates while paused.
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    const i = Math.min(n - 1, Math.max(0, Math.round(v * (n - 1))));
+    setActive((prev) => (prev === i ? prev : i));
+  });
+
+  // Scroll to a slide's "home" progress point. scroll progress 0..1 is
+  // distributed evenly across n-1 transitions, so slide i lives at
+  // i/(n-1). Convert that to a document scrollTop.
   const goTo = useCallback(
-    (i: number) => setActive(Math.max(0, Math.min(i, n - 1))),
+    (i: number) => {
+      const el = wrapperRef.current;
+      if (!el) return;
+      const clamped = Math.max(0, Math.min(i, n - 1));
+      const rect = el.getBoundingClientRect();
+      const wrapperTop = window.scrollY + rect.top;
+      const runway = el.offsetHeight - window.innerHeight;
+      const target = wrapperTop + (clamped / (n - 1)) * runway;
+      window.scrollTo({ top: target, behavior: "smooth" });
+    },
     [n]
   );
 
+  // Arrow-key navigation. Only acts when the pinned section is on
+  // screen to avoid stealing keys from the rest of the page.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLElement) {
         const tag = e.target.tagName;
         if (tag === "INPUT" || tag === "TEXTAREA" || e.target.isContentEditable) return;
       }
-      if (e.key === "ArrowRight") {
+      const el = wrapperRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const onScreen = rect.top < window.innerHeight * 0.5 && rect.bottom > window.innerHeight * 0.5;
+      if (!onScreen) return;
+
+      if (e.key === "ArrowDown" || e.key === "ArrowRight") {
         e.preventDefault();
-        setActive((a) => Math.min(a + 1, n - 1));
-      } else if (e.key === "ArrowLeft") {
+        goTo(active + 1);
+      } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
         e.preventDefault();
-        setActive((a) => Math.max(a - 1, 0));
+        goTo(active - 1);
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [n]);
-
-  const handleDragEnd = (
-    _e: MouseEvent | TouchEvent | PointerEvent,
-    info: PanInfo
-  ) => {
-    const swipe = Math.abs(info.offset.x) * info.velocity.x;
-    const threshold = 8000;
-    if (info.offset.x < -80 || swipe < -threshold) goTo(active + 1);
-    else if (info.offset.x > 80 || swipe > threshold) goTo(active - 1);
-  };
+  }, [active, goTo]);
 
   return (
-    <section className="relative">
-      {/* Explicit height on the slides viewport so each Slide's
-          justify-end has a real container to anchor against. Reserves
-          ~120px below for the pagination pill + bottom spacing. */}
-      <div className="relative h-[calc(100svh-7.5rem)] overflow-hidden">
-        <motion.div
-          className="flex h-full will-change-transform cursor-grab active:cursor-grabbing"
-          style={{ width: `${n * 100}%` }}
-          animate={{ x: `-${(100 / n) * active}%` }}
-          transition={
-            reduced
-              ? { duration: 0 }
-              : { type: "spring", stiffness: 110, damping: 22, mass: 0.6 }
-          }
-          drag="x"
-          dragDirectionLock
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.18}
-          onDragEnd={handleDragEnd}
-        >
-          {slides.map((slide, i) => (
-            <div
-              key={i}
-              className="shrink-0 h-full"
-              style={{ width: `${100 / n}%` }}
-              aria-hidden={i !== active}
-            >
-              {slide}
-            </div>
-          ))}
-        </motion.div>
-      </div>
+    <section
+      ref={wrapperRef}
+      className="relative"
+      style={{ height: `${n * 100}svh` }}
+      aria-roledescription="carousel"
+    >
+      <div className="sticky top-0 h-[100svh] overflow-hidden">
+        {slides.map((slide, i) => (
+          <SlideLayer
+            key={i}
+            index={i}
+            total={n}
+            progress={scrollYProgress}
+            active={active}
+            reduced={!!reduced}
+          >
+            {slide}
+          </SlideLayer>
+        ))}
 
-      {/* Dot pill pagination — left-aligned to the content gutter
-          so the dots read as the bottom of the content column, not
-          a centered island floating below it. */}
-      <div className="relative mx-auto max-w-[1400px] w-full px-6 md:px-20 pt-6 pb-12 md:pb-16">
-        <div
+        {/* Vertical dot pagination — right edge, centered. */}
+        <nav
           role="tablist"
-          aria-label="Carousel slides"
-          className="surface rounded-full px-4 py-3 flex items-center gap-3 w-fit"
+          aria-label="Section slides"
+          className="absolute right-5 md:right-8 top-1/2 -translate-y-1/2 z-10 flex flex-col items-center gap-3 surface rounded-full py-4 px-2"
         >
           {Array.from({ length: n }).map((_, i) => {
             const isActive = i === active;
@@ -116,14 +136,76 @@ export function SlideReel({ slides }: { slides: ReactNode[] }) {
               </button>
             );
           })}
-        </div>
+        </nav>
       </div>
     </section>
   );
 }
 
 /**
- * Slide shell — consistent padding, max-width, slide number / kicker.
+ * One layer in the pinned stack. Each slide's "home" progress point is
+ * i/(n-1); it crossfades in/out over a window of ±1/(n-1) around that.
+ * Opacity is hard-clamped so slides fully disappear outside their
+ * window (avoids subpixel ghosting on stacked text).
+ */
+function SlideLayer({
+  index,
+  total,
+  progress,
+  active,
+  reduced,
+  children,
+}: {
+  index: number;
+  total: number;
+  progress: MotionValue<number>;
+  active: number;
+  reduced: boolean;
+  children: ReactNode;
+}) {
+  const step = total > 1 ? 1 / (total - 1) : 1;
+  const home = index * step;
+
+  // Opacity window: 0 → 1 → 0 across [home-step, home, home+step].
+  // For reduced motion we collapse the crossfade to a step function.
+  const opacity = useTransform(
+    progress,
+    reduced
+      ? [home - step / 2, home - step / 2 + 0.0001, home + step / 2 - 0.0001, home + step / 2]
+      : [home - step, home, home + step],
+    reduced ? [0, 1, 1, 0] : [0, 1, 0]
+  );
+
+  // Subtle lift in / out. Kept small (32px) so it reads as a settle,
+  // not a slide-show.
+  const y = useTransform(
+    progress,
+    [home - step, home, home + step],
+    reduced ? [0, 0, 0] : [32, 0, -32]
+  );
+
+  // Only the active layer should receive pointer events — otherwise
+  // invisible layers eat clicks from links that land on them.
+  const isActive = active === index;
+
+  return (
+    <motion.div
+      className="absolute inset-0 will-change-[opacity,transform]"
+      style={{ opacity, y, pointerEvents: isActive ? "auto" : "none" }}
+      aria-hidden={!isActive}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/**
+ * Slide shell — the visual frame for each layer.
+ *
+ * Content is vertically centered within the pinned viewport so slides
+ * read as balanced compositions rather than bottom-anchored moments.
+ * Right padding is padded extra on desktop to clear the vertical dot
+ * pagination.
  */
 export function Slide({
   index,
@@ -148,7 +230,7 @@ export function Slide({
   return (
     <div className="relative h-full w-full flex">
       <div
-        className={`relative mx-auto max-w-[1400px] w-full h-full px-6 md:px-20 pt-32 md:pt-40 pb-6 md:pb-8 flex flex-col justify-end ${alignClass}`}
+        className={`relative mx-auto max-w-[1400px] w-full h-full px-6 md:pl-20 md:pr-28 py-16 md:py-24 flex flex-col justify-center ${alignClass}`}
       >
         <div className="flex items-center gap-4 mb-6 label-xs text-[var(--color-fg-muted)]">
           <span>
