@@ -81,7 +81,7 @@ export function ChapterHero({
         </Reveal>
 
         <Reveal delay={0.3}>
-          <p className="mt-6 max-w-2xl text-[var(--color-fg-muted)] font-light">
+          <p className="type-lead mt-6 max-w-2xl text-[var(--color-fg-muted)]">
             {tagline}
           </p>
         </Reveal>

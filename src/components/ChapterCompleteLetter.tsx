@@ -113,7 +113,7 @@ export function ChapterCompleteLetter({ chapter }: { chapter: Chapter }) {
           CHAPTER {chapter.number} · COMPLETE
         </div>
         <h2 className="mt-4 type-heading max-w-2xl">{copy.heading}</h2>
-        <p className="mt-6 max-w-xl text-[var(--color-fg)]/85 font-light leading-relaxed">
+        <p className="type-lead mt-6 max-w-xl text-[var(--color-fg)]/90 leading-relaxed">
           {copy.body}
         </p>
         <div className="mt-10 flex items-center gap-3">

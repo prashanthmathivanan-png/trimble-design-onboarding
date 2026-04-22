@@ -113,7 +113,7 @@ function Item({
             />
           </span>
           {item.hint && (
-            <span className="block mt-1 text-[var(--color-fg-muted)] font-light">
+            <span className="block mt-1 text-[var(--color-fg-muted)]">
               {item.hint}
             </span>
           )}
@@ -169,7 +169,7 @@ export function ChecklistGroupView({
             </div>
             <div className="type-heading mt-2">{group.title}</div>
             {group.blurb && (
-              <p className="mt-2 text-[var(--color-fg-muted)] max-w-xl font-light">
+              <p className="mt-2 text-[var(--color-fg-muted)] max-w-xl">
                 {group.blurb}
               </p>
             )}

@@ -119,13 +119,27 @@ body {
   padding-bottom: 0.12em; /* reserve italic/descender overhang */
 }
 
+/* Heading tier is one weight step below Display so the two tiers are
+   visibly distinct. Open Sans at 700 still reads confidently at 24-36px. */
 .type-heading {
   font-family: var(--font-sans), system-ui, sans-serif;
   font-size: var(--text-heading);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.05;
   padding-bottom: 0.08em; /* reserve italic/descender overhang */
+}
+
+/* Lead tier — intro paragraphs beneath a Display or Heading. Medium
+   (500) carries more weight than body copy without competing with the
+   heading, and resolves the prior habit of defaulting to `font-light`
+   for everything (which read hesitant, not confident). */
+.type-lead {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
 }
 
 /* Legacy alias — kept so existing `font-display` classes still work,
