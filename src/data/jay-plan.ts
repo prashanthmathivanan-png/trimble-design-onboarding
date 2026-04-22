@@ -4,6 +4,8 @@ export type Person = {
   role: string;
   note?: string;
   avatarSeed?: string;
+  email?: string;
+  photo?: string;
 };
 
 export type ChecklistItem = {
@@ -62,10 +64,26 @@ export const jayPlan: OnboardingPlan = {
       name: "Victor Solano",
       role: "Global Director, Trimble UX",
       avatarSeed: "victor-solano",
+      email: "victor_solano@trimble.com",
+      photo: "/people/victor.webp",
     },
     buddies: [
-      { id: "nawaz", name: "Nawaz", role: "Trimble Design APAC", avatarSeed: "nawaz" },
-      { id: "prashanth", name: "Prashanth", role: "Trimble Design APAC", avatarSeed: "prashanth" },
+      {
+        id: "nawaz",
+        name: "Mohammed Nawaz",
+        role: "Staff UI/UX Designer",
+        avatarSeed: "nawaz",
+        email: "mohammed_nawaz@trimble.com",
+        photo: "/people/nawaz.webp",
+      },
+      {
+        id: "prashanth",
+        name: "Prashanth Mathivanan",
+        role: "Lead UI/UX Designer",
+        avatarSeed: "prashanth",
+        email: "prashanth_mathivanan@trimble.com",
+        photo: "/people/prashanth.webp",
+      },
     ],
   },
   team: {
@@ -108,8 +126,8 @@ export const jayPlan: OnboardingPlan = {
     indiaLeadership: [
       { id: "rajan-iyer", name: "Rajan Iyer", role: "Vice President, Managing Director", avatarSeed: "rajan-iyer" },
       { id: "sudhir-kamath", name: "Sudhir Kamath", role: "Senior Director, Finance", avatarSeed: "sudhir-kamath" },
-      { id: "murari-krishnan", name: "Murari Krishnan", role: "CPD", avatarSeed: "murari-krishnan" },
-      { id: "vetrivel-shanmugam", name: "Vetrivel Shanmugam", role: "O&PS", avatarSeed: "vetrivel-shanmugam" },
+      { id: "murari-krishnan", name: "Murari Krishnan", role: "Central Product Development", avatarSeed: "murari-krishnan" },
+      { id: "vetrivel-shanmugam", name: "Vetrivel Shanmugam", role: "Owner & Public Sector", avatarSeed: "vetrivel-shanmugam" },
       { id: "hari-kishore-sekar", name: "Hari Kishore Sekar", role: "HR", avatarSeed: "hari-kishore" },
       { id: "dhanujnath", name: "Dhanujnath", role: "HR", avatarSeed: "dhanujnath" },
     ],
@@ -137,10 +155,8 @@ export const jayPlan: OnboardingPlan = {
             { id: "gchat", label: "Google Chat", hint: "DMs and team spaces accessible." },
             { id: "okta", label: "Trimble Okta access", hint: "Confirm Jay can sign into all required tools through Okta SSO." },
             { id: "hardware", label: "Set up Jay's hardware", hint: "Laptop, peripherals, and any role-specific kit ready on day one." },
-            // TODO(clarify): confirm who/what "Charlie" is, then write a one-line hint.
-            { id: "charlie", label: "Introduction to Charlie" },
-            // TODO(clarify): confirm what "Rob's Updates" is (recurring meeting? newsletter?), then add hint.
-            { id: "robs-updates", label: "Rob's Updates" },
+            { id: "charlie", label: "Introduction to Charlie", hint: "Trimble's intranet — leadership updates, org news, and where teams connect." },
+            { id: "robs-updates", label: "Rob's Updates", hint: "Rob Painter's (CEO) recurring updates on Trimble's 2026 OKRs." },
             { id: "aeco", label: "AECO", hint: "Trimble's Architecture, Engineering, Construction & Owners segment — the industry vertical this team supports." },
           ],
         },
@@ -188,10 +204,8 @@ export const jayPlan: OnboardingPlan = {
           items: [
             { id: "reg-rajan", label: "Rajan Iyer — Vice President & Managing Director" },
             { id: "reg-sudhir", label: "Sudhir Kamath — Senior Director, Finance" },
-            // TODO(clarify): expand "CPD" — what does it stand for at Trimble?
-            { id: "reg-murari", label: "Murari Krishnan — CPD" },
-            // TODO(clarify): expand "O&PS" — likely Operations & Professional Services?
-            { id: "reg-vetrivel", label: "Vetrivel Shanmugam — O&PS" },
+            { id: "reg-murari", label: "Murari Krishnan — Central Product Development" },
+            { id: "reg-vetrivel", label: "Vetrivel Shanmugam — Owner & Public Sector" },
             { id: "reg-hari", label: "Hari Kishore Sekar — HR" },
             { id: "reg-dhanujnath", label: "Dhanujnath — HR" },
           ],
@@ -236,14 +250,12 @@ export const jayPlan: OnboardingPlan = {
           title: "Employee Portal & Tools",
           items: [
             { id: "ep-workday", label: "Workday", hint: "HR & payroll system — leave, benefits, personal info." },
-            // TODO(clarify): what is "GPS Sync" at Trimble? Add a one-line hint.
-            { id: "ep-gps-sync", label: "GPS Sync" },
+            { id: "ep-gps-sync", label: "GPS Sync", hint: "Trimble's development & performance check-in — Growth, Priorities, Shared values." },
             { id: "ep-gsuite", label: "Google Workspace", hint: "Gmail, Calendar, Drive, Docs, Meet — the day-to-day collaboration suite." },
             { id: "ep-is", label: "IS Helpdesk", hint: "Information Systems — raise tickets here for IT, network, and software issues." },
             { id: "ep-license", label: "Licensing", hint: "Request and manage software licences." },
             { id: "ep-reimburse", label: "Reimbursements", hint: "Submit expense claims for travel, meals, and approved purchases." },
-            // TODO(clarify): what is "Bravo"? Internal recognition platform? Add hint.
-            { id: "ep-bravo", label: "Bravo" },
+            { id: "ep-bravo", label: "Bravo", hint: "Trimble's recognition platform — give and receive shout-outs for great work." },
             { id: "ep-drive", label: "Team's Google Drive", hint: "Shared workspace for active and archived team work." },
           ],
         },
