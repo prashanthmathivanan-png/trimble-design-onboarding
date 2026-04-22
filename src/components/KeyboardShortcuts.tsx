@@ -90,7 +90,7 @@ export function KeyboardShortcuts() {
             { k: "1", label: "Chapter 01 · Learn" },
             { k: "2", label: "Chapter 02 · Level" },
             { k: "3", label: "Chapter 03 · Lead" },
-            { k: "?", label: "Toggle this sheet" },
+            { k: "?", label: "Show / hide shortcuts" },
             { k: "Esc", label: "Close" },
           ].map(({ k, label }) => (
             <div key={k} className="flex items-center justify-between gap-4">
