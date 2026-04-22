@@ -94,7 +94,7 @@ export function KeyboardShortcuts() {
             { k: "Esc", label: "Close" },
           ].map(({ k, label }) => (
             <div key={k} className="flex items-center justify-between gap-4">
-              <span className="text-[var(--color-fg)]/90 font-light">
+              <span className="text-[var(--color-fg)]/90">
                 {label}
               </span>
               <kbd className="label-xs px-2 py-1 rounded-md bg-[var(--color-bg)] border border-[var(--color-line)] text-[var(--color-fg)]">

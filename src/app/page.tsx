@@ -33,7 +33,7 @@ export default function WelcomePage() {
           </Reveal>
 
           <Reveal delay={0.35}>
-            <p className="mt-10 max-w-xl text-[var(--color-fg)]/85 font-light">
+            <p className="type-lead mt-10 max-w-xl text-[var(--color-fg)]/90">
               A 90-day onboarding and leadership plan — from the{" "}
               <TrimbleDesignAPAC className="text-[var(--color-fg)]" /> team to our new{" "}
               <span className="text-[var(--color-fg)]">Senior UX Design Manager.</span>
@@ -73,7 +73,7 @@ export default function WelcomePage() {
               <h2 className="type-display max-w-5xl">
                 <TrimbleDesignAPAC />.
               </h2>
-              <p className="mt-10 max-w-2xl text-[var(--color-fg)]/80 font-light">
+              <p className="type-lead mt-10 max-w-2xl text-[var(--color-fg)]/85">
                 {team.about}
               </p>
             </Slide>,
@@ -89,7 +89,7 @@ export default function WelcomePage() {
               <h2 className="type-heading max-w-5xl">
                 {team.mission.title}
               </h2>
-              <p className="mt-10 max-w-2xl text-[var(--color-fg-muted)] font-light">
+              <p className="mt-10 max-w-2xl text-[var(--color-fg-muted)]">
                 {team.mission.body}
               </p>
             </Slide>,
@@ -105,7 +105,7 @@ export default function WelcomePage() {
               <h2 className="type-heading max-w-5xl">
                 {team.vision.title}
               </h2>
-              <p className="mt-10 max-w-2xl text-[var(--color-fg-muted)] font-light">
+              <p className="mt-10 max-w-2xl text-[var(--color-fg-muted)]">
                 {team.vision.body}
               </p>
             </Slide>,
@@ -133,7 +133,7 @@ export default function WelcomePage() {
                     <div className="mt-2 font-semibold">
                       {pillar.name}
                     </div>
-                    <p className="mt-3 text-[var(--color-fg-muted)] font-light">
+                    <p className="mt-3 text-[var(--color-fg-muted)]">
                       {pillar.body}
                     </p>
                   </div>
@@ -215,7 +215,7 @@ export default function WelcomePage() {
                     <div className="type-heading">
                       {c.verb}.
                     </div>
-                    <p className="mt-3 opacity-80 max-w-xs font-light">
+                    <p className="mt-3 opacity-90 max-w-xs">
                       {c.tagline}
                     </p>
                     <div className="mt-5 inline-flex items-center gap-2 font-semibold">

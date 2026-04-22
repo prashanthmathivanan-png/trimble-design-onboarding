@@ -80,7 +80,7 @@ export function SignedBy() {
                 </div>
               ))}
               <p
-                className="sig-line mt-3 text-[var(--color-fg-muted)] font-light max-w-sm"
+                className="sig-line mt-3 text-[var(--color-fg-muted)] italic font-light max-w-sm"
                 style={{ animationDelay: `${SIGNATORIES.length * 110}ms` }}
               >
                 Welcome, Jay. We made this for you.
