@@ -110,6 +110,15 @@ body {
   line-height: 1.55;
 }
 
+/* Keyboard focus — a single, accent-tinted ring for every interactive
+   element. :focus-visible scopes it to keyboard use so pointer clicks
+   don't light up with a ring. Offset clears rounded surfaces. */
+:focus-visible {
+  outline: 2px solid color-mix(in oklch, var(--accent) 70%, transparent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 .type-display {
   font-family: var(--font-sans), system-ui, sans-serif;
   font-size: var(--text-display);

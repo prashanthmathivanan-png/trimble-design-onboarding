@@ -45,7 +45,7 @@ export function SignedBy() {
         className="group inline-flex items-center gap-2 label-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition"
       >
         <span className="h-px w-8 bg-current opacity-40" />
-        <span>{open ? "Signed, with care" : "Signed by the team"}</span>
+        <span>Signed by the team</span>
         <CaretDown
           size={12}
           className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}
@@ -80,10 +80,10 @@ export function SignedBy() {
                 </div>
               ))}
               <p
-                className="sig-line mt-3 text-[var(--color-fg-muted)] italic font-light max-w-sm"
+                className="sig-line mt-3 text-[var(--color-fg-muted)] italic max-w-sm"
                 style={{ animationDelay: `${SIGNATORIES.length * 110}ms` }}
               >
-                Welcome, Jay. We made this for you.
+                Sixteen of us made it. It&apos;s yours to run.
               </p>
             </div>
           </motion.div>
