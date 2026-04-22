@@ -25,9 +25,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${openSans.variable} dark antialiased`}
-      data-theme="modus-modern-dark"
-      data-mode="dark"
+      className={`${openSans.variable} light antialiased`}
+      data-theme="modus-modern-light"
+      data-mode="light"
       suppressHydrationWarning
     >
       <body>

@@ -9,7 +9,7 @@ const ThemeContext = createContext<Ctx | null>(null);
 const STORAGE_KEY = "td-onboarding-theme";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [mode, setModeState] = useState<Mode>("dark");
+  const [mode, setModeState] = useState<Mode>("light");
 
   useEffect(() => {
     const stored = (typeof window !== "undefined" && localStorage.getItem(STORAGE_KEY)) as
