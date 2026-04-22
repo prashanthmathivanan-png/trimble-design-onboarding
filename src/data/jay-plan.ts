@@ -131,27 +131,29 @@ export const jayPlan: OnboardingPlan = {
           title: "Access & Hardware",
           blurb: "Make sure Jay can simply do the work on day one.",
           items: [
-            { id: "drives-chat", label: "Access to all drives and chat spaces" },
-            { id: "calendar", label: "Calendar" },
-            { id: "gmail", label: "Gmail" },
-            { id: "gchat", label: "Google Chat" },
-            { id: "okta", label: "Trimble Okta login", hint: "Confirm access to tools & software" },
-            { id: "hardware", label: "Ensure the manager has the specific hardware" },
+            { id: "drives-chat", label: "Access to all drives & chat spaces", hint: "Shared team drives, Google Chat spaces, and any project-specific channels." },
+            { id: "calendar", label: "Calendar", hint: "Trimble Google Calendar — recurring meetings and team rituals pre-loaded." },
+            { id: "gmail", label: "Gmail", hint: "Trimble email account active and signed in." },
+            { id: "gchat", label: "Google Chat", hint: "DMs and team spaces accessible." },
+            { id: "okta", label: "Trimble Okta access", hint: "Confirm Jay can sign into all required tools through Okta SSO." },
+            { id: "hardware", label: "Set up Jay's hardware", hint: "Laptop, peripherals, and any role-specific kit ready on day one." },
+            // TODO(clarify): confirm who/what "Charlie" is, then write a one-line hint.
             { id: "charlie", label: "Introduction to Charlie" },
+            // TODO(clarify): confirm what "Rob's Updates" is (recurring meeting? newsletter?), then add hint.
             { id: "robs-updates", label: "Rob's Updates" },
-            { id: "aeco", label: "AECO" },
+            { id: "aeco", label: "AECO", hint: "Trimble's Architecture, Engineering, Construction & Owners segment — the industry vertical this team supports." },
           ],
         },
         {
           id: "welcome",
           title: "Welcome to the Team",
           items: [
-            { id: "studio-prep", label: "Welcoming Jay to the team", hint: "Prep the studio space and welcoming arrangements" },
-            { id: "team-intros", label: "Introduction to team members" },
-            { id: "studio-tour", label: "Tour around the studio and office space", hint: "Studio etiquettes and culture" },
+            { id: "studio-prep", label: "Welcome Jay to the team", hint: "Prep the studio space and welcoming arrangements." },
+            { id: "team-intros", label: "Introduce Jay to team members" },
+            { id: "studio-tour", label: "Tour of the studio & office", hint: "Cover studio etiquette and team culture along the way." },
             {
               id: "chat-spaces",
-              label: "Adding Jay to the chat spaces",
+              label: "Add Jay to chat spaces",
               children: [
                 { id: "cs-tdi", label: "Trimble Design India" },
                 { id: "cs-tdg", label: "Trimble Design Global" },
@@ -165,31 +167,33 @@ export const jayPlan: OnboardingPlan = {
           id: "tux-global",
           title: "Welcome to TUX Global",
           items: [
-            { id: "tux-intro", label: "Introduction to TUX Global" },
+            { id: "tux-intro", label: "Intro to TUX Global", hint: "Trimble UX Global — the worldwide UX org TD APAC sits within." },
             { id: "tux-leadership", label: "Leadership meeting — TUX Global" },
-            { id: "tux-1-1s", label: "1:1 with the leaders of TUX Global" },
+            { id: "tux-1-1s", label: "1:1s with TUX Global leads" },
           ],
         },
         {
           id: "engagement",
-          title: "Engagement with Global Leadership",
+          title: "Connect with Global Leadership",
           items: [
-            { id: "eng-jessica", label: "Jessica Betha" },
-            { id: "eng-chris", label: "Chris Peppler — Executive sync", hint: "Align on the impact of design within the organization" },
-            { id: "eng-allhands", label: "All hands — AECO Platform team" },
-            { id: "eng-mark", label: "Ask Mark Anything" },
+            { id: "eng-jessica", label: "Jessica Betha", hint: "TUX Global Leadership — meet & align." },
+            { id: "eng-chris", label: "Chris Peppler — executive sync", hint: "Talk through how design moves the org forward." },
+            { id: "eng-allhands", label: "All-hands — AECO Platform team" },
+            { id: "eng-mark", label: "Ask Mark Anything", hint: "Recurring open forum with Mark from the AECO Platform team — bring questions." },
           ],
         },
         {
           id: "regional",
           title: "Regional Leadership — India",
           items: [
-            { id: "reg-rajan", label: "Rajan Iyer — Vice President Managing Director" },
-            { id: "reg-sudhir", label: "Sudhir Kamath — Senior Director Finance" },
-            { id: "reg-murari", label: "CPD: Murari Krishnan" },
-            { id: "reg-vetrivel", label: "O&PS: Vetrivel Shanmugam" },
-            { id: "reg-hari", label: "HR: Hari Kishore Sekar" },
-            { id: "reg-dhanujnath", label: "HR: Dhanujnath" },
+            { id: "reg-rajan", label: "Rajan Iyer — Vice President & Managing Director" },
+            { id: "reg-sudhir", label: "Sudhir Kamath — Senior Director, Finance" },
+            // TODO(clarify): expand "CPD" — what does it stand for at Trimble?
+            { id: "reg-murari", label: "Murari Krishnan — CPD" },
+            // TODO(clarify): expand "O&PS" — likely Operations & Professional Services?
+            { id: "reg-vetrivel", label: "Vetrivel Shanmugam — O&PS" },
+            { id: "reg-hari", label: "Hari Kishore Sekar — HR" },
+            { id: "reg-dhanujnath", label: "Dhanujnath — HR" },
           ],
         },
         {
@@ -198,20 +202,20 @@ export const jayPlan: OnboardingPlan = {
           items: [
             {
               id: "team-1-1s",
-              label: "1:1s with all team members",
-              hint: "Schedule at mutually convenient times with advance notice to help the team manage their daily schedules.",
+              label: "1:1s with each team member",
+              hint: "Schedule at mutually convenient times with advance notice so the team can plan around them.",
             },
-            { id: "team-coffee", label: "Team outing or coffee times", hint: "Initiated by Jay — get to know the team pulse." },
-            { id: "team-lunch", label: "Arrange for team lunch and informal activities" },
+            { id: "team-coffee", label: "Team outing or coffee catch-up", hint: "Initiated by Jay — get to know the team pulse." },
+            { id: "team-lunch", label: "Plan team lunch & informal hangouts" },
           ],
         },
         {
           id: "audit",
           title: "Fresh Eyes Audit & Understanding Users",
           items: [
-            { id: "audit-review", label: "Perform a high-level review of our current design language and product strategy" },
-            { id: "audit-users", label: "Understanding Trimble's users, customers, and operational sectors" },
-            { id: "audit-fly", label: "Fly on the wall observation" },
+            { id: "audit-review", label: "Review the current design language & product strategy" },
+            { id: "audit-users", label: "Get to know Trimble's users, customers & sectors" },
+            { id: "audit-fly", label: "Fly-on-the-wall observation", hint: "Sit in on team rituals — observe, don't interject." },
           ],
         },
       ],
@@ -231,14 +235,16 @@ export const jayPlan: OnboardingPlan = {
           id: "employee-portal",
           title: "Employee Portal & Tools",
           items: [
-            { id: "ep-workday", label: "Workday" },
+            { id: "ep-workday", label: "Workday", hint: "HR & payroll system — leave, benefits, personal info." },
+            // TODO(clarify): what is "GPS Sync" at Trimble? Add a one-line hint.
             { id: "ep-gps-sync", label: "GPS Sync" },
-            { id: "ep-gsuite", label: "Google Suite" },
-            { id: "ep-is", label: "IS Helpdesk" },
-            { id: "ep-license", label: "Licensing" },
-            { id: "ep-reimburse", label: "Reimbursement" },
+            { id: "ep-gsuite", label: "Google Workspace", hint: "Gmail, Calendar, Drive, Docs, Meet — the day-to-day collaboration suite." },
+            { id: "ep-is", label: "IS Helpdesk", hint: "Information Systems — raise tickets here for IT, network, and software issues." },
+            { id: "ep-license", label: "Licensing", hint: "Request and manage software licences." },
+            { id: "ep-reimburse", label: "Reimbursements", hint: "Submit expense claims for travel, meals, and approved purchases." },
+            // TODO(clarify): what is "Bravo"? Internal recognition platform? Add hint.
             { id: "ep-bravo", label: "Bravo" },
-            { id: "ep-drive", label: "Team's Google Drive" },
+            { id: "ep-drive", label: "Team's Google Drive", hint: "Shared workspace for active and archived team work." },
           ],
         },
         {
@@ -254,12 +260,12 @@ export const jayPlan: OnboardingPlan = {
           id: "studio-resources",
           title: "Studio & System",
           items: [
-            { id: "sr-ds", label: "Design system" },
-            { id: "sr-folders", label: "Team folders" },
-            { id: "sr-etiquette", label: "Studio etiquettes" },
+            { id: "sr-ds", label: "Design system", hint: "Modus — Trimble's component library and design language." },
+            { id: "sr-folders", label: "Team folders", hint: "Where active projects, archives, and shared assets live." },
+            { id: "sr-etiquette", label: "Studio etiquette", hint: "How we work together in the space — meeting norms, focus time, shared rituals." },
             { id: "sr-figma", label: "Figma libraries" },
             { id: "sr-brand", label: "Brand guidelines" },
-            { id: "sr-repo", label: "Access to resource repository" },
+            { id: "sr-repo", label: "Access the team resource repo", hint: "Templates, references, and shared assets the team draws from." },
           ],
         },
         {
@@ -268,7 +274,8 @@ export const jayPlan: OnboardingPlan = {
           items: [
             {
               id: "oa-tools",
-              label: "Ensure the team has the right hardware, software, and tools to succeed",
+              label: "Audit team hardware, software & tools",
+              hint: "Confirm everyone has what they need to do their best work.",
             },
           ],
         },
@@ -302,8 +309,8 @@ export const jayPlan: OnboardingPlan = {
           items: [
             {
               id: "dev-upgrade",
-              label: "Leverage upgrade and professional development materials",
-              hint: "Drive team participation and craft excellence.",
+              label: "Roll out professional development materials",
+              hint: "Boost team participation and lift craft quality.",
             },
           ],
         },
@@ -313,8 +320,8 @@ export const jayPlan: OnboardingPlan = {
           items: [
             {
               id: "ci-survey",
-              label: "Issue User Surveys to the design team",
-              hint: "Gather feedback and continuously improve internal processes.",
+              label: "Send team surveys",
+              hint: "Gather feedback and keep improving how the team works.",
             },
           ],
         },
@@ -322,7 +329,7 @@ export const jayPlan: OnboardingPlan = {
           id: "roadmap",
           title: "Quarter Roadmap",
           items: [
-            { id: "rm-roadmap", label: "Design roadmap for the team for the upcoming quarter" },
+            { id: "rm-roadmap", label: "Plan the team's quarterly design roadmap" },
           ],
         },
       ],
