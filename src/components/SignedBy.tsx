@@ -13,10 +13,25 @@ import { motion, AnimatePresence } from "motion/react";
  *
  * This replaces the static footer phrase with a living, interactive ending.
  */
-const SIGNATORIES = [
-  { name: "Victor Solano", role: "Global Director, Trimble UX" },
-  { name: "Nawaz", role: "Trimble Design APAC" },
-  { name: "Prashanth", role: "Trimble Design APAC" },
+type Signatory = { name: string; role?: string };
+
+const SIGNATORIES: Signatory[] = [
+  { name: "Victor Solano" },
+  { name: "Aruna Chandroo" },
+  { name: "Arushi Chandak" },
+  { name: "Disha Singh Arora" },
+  { name: "Mohammed Nawaz" },
+  { name: "Nikhil Sanjay Pol" },
+  { name: "Nupur Chauhan" },
+  { name: "Prashanth Mathivanan" },
+  { name: "Rakeshwar T" },
+  { name: "Ramkumar SPS" },
+  { name: "Seerat Sidhu" },
+  { name: "Swati Bali" },
+  { name: "Thulasi Priya" },
+  { name: "Vasundhara Sridharan" },
+  { name: "Vincy A" },
+  { name: "Yash Vasant Dudhpachare" },
 ];
 
 export function SignedBy() {
@@ -57,9 +72,11 @@ export function SignedBy() {
                   <span className="italic text-[var(--accent)]">
                     {s.name}
                   </span>
-                  <span className="label-xs text-[var(--color-fg-muted)]">
-                    {s.role}
-                  </span>
+                  {s.role && (
+                    <span className="label-xs text-[var(--color-fg-muted)]">
+                      {s.role}
+                    </span>
+                  )}
                 </div>
               ))}
               <p

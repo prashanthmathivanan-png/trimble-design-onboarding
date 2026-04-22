@@ -3,15 +3,19 @@ import type { Person } from "@/data/jay-plan";
 
 export function PersonCard({ person }: { person: Person }) {
   const seed = person.avatarSeed ?? person.id;
+  const hasPhoto = Boolean(person.photo);
+  const src = hasPhoto
+    ? (person.photo as string)
+    : `https://api.dicebear.com/7.x/notionists/svg?seed=${encodeURIComponent(seed)}&backgroundColor=ffb347,c96a2c,ffd4a3`;
   return (
     <div className="glass-soft rounded-xl p-4 flex items-start gap-4">
       <div className="relative w-14 h-14 rounded-full overflow-hidden shrink-0 bg-[var(--color-bg-elev)]">
         <Image
-          src={`https://api.dicebear.com/7.x/notionists/svg?seed=${encodeURIComponent(seed)}&backgroundColor=ffb347,c96a2c,ffd4a3`}
+          src={src}
           alt={person.name}
           fill
           sizes="56px"
-          unoptimized
+          unoptimized={!hasPhoto}
         />
       </div>
       <div className="min-w-0">

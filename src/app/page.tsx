@@ -19,7 +19,7 @@ export default function WelcomePage() {
       <section className="relative min-h-[100svh] overflow-hidden">
         <div className="relative mx-auto max-w-[1600px] px-6 md:px-20 pt-40 md:pt-56 pb-24">
           <Reveal>
-            <div className="label-xs text-[var(--color-accent)]">WELCOME</div>
+            <div className="label-xs text-[var(--color-accent)]">CHAPTER 00</div>
           </Reveal>
 
           <Reveal delay={0.15}>
