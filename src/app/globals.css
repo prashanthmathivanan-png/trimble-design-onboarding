@@ -125,7 +125,7 @@ body {
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 0.95;
-  padding-bottom: 0.12em; /* reserve italic/descender overhang */
+  padding-bottom: 0.22em; /* reserve italic/descender overhang — Open Sans italic glyphs drop well below the baseline */
 }
 
 /* Heading tier is one weight step below Display so the two tiers are

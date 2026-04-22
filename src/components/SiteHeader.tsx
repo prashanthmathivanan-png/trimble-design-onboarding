@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
 const CHAPTERS = [
-  { href: "/", label: "Welcome", num: "00" },
+  { href: "/", label: "Welcome", num: "" },
   { href: "/learn", label: "Learn", num: "01" },
   { href: "/level", label: "Level", num: "02" },
   { href: "/lead", label: "Lead", num: "03" },
@@ -42,7 +42,7 @@ export function SiteHeader() {
                       : "text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
                   )}
                 >
-                  <span className="opacity-60">{c.num}</span>
+                  {c.num && <span className="opacity-60">{c.num}</span>}
                   <span>{c.label}</span>
                 </Link>
               );
