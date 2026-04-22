@@ -7,40 +7,47 @@
   --color-fg: var(--fg);
   --color-fg-muted: var(--fg-muted);
   --color-accent: var(--accent);
+  --color-accent-secondary: var(--accent-secondary);
   --color-line: var(--line);
   --font-sans: var(--font-sans);
 }
 
 /* Palette aligned to Trimble Brand Guidelines v8.0 (Feb 2025)
-   Hero Gray 10 #252A2E · Gray 11 #171C1E · Gray -1 #F1F1F6
-   Gold 10 #FBAD26 · Blue 10 #0063A3 · Gray 4 #90939F · Gray 7 #585C65 */
+   Canvas: Gray -1 #F1F1F6 (light) · Gray 11 #171C1E (dark)
+   Hero:   Gray 10 #252A2E (structure + stoutness)
+   Accents: Gold 10 #FBAD26 · Blue 10 #0063A3
+   Muted text: Gray 7 #585C65 (light) · Gray 3 #A3A6B1 (dark) */
+
+/* Light is the brand canvas (per guidelines p.22). Default to it. */
 :root,
+html.light {
+  color-scheme: light;
+  --bg: #F1F1F6;        /* Trimble Gray -1 — canvas */
+  --bg-elev: #FFFFFF;   /* White — secondary canvas */
+  --fg: #252A2E;        /* Trimble Hero Gray 10 */
+  --fg-muted: #585C65;  /* Trimble Gray 7 */
+  --accent: #FBAD26;            /* Trimble Gold 10 — journey / progress */
+  --accent-secondary: #0063A3;  /* Trimble Blue 10 — section / org labels */
+  --line: rgb(37 42 46 / 0.1);
+  --glass-bg: rgb(255 255 255 / 0.6);
+  --glass-border: rgb(37 42 46 / 0.08);
+  --glass-highlight: rgb(37 42 46 / 0.04);
+}
+
+/* Dark: inverted palette, used as a toggle and for hero sections. */
 html.dark {
   color-scheme: dark;
   --bg: #171C1E;        /* Trimble Gray 11 */
   --bg-elev: #252A2E;   /* Trimble Hero Gray 10 */
   --fg: #F1F1F6;        /* Trimble Gray -1 */
   --fg-muted: #A3A6B1;  /* Trimble Gray 3 (soft, legible on hero gray) */
-  --accent: #FBAD26;    /* Trimble Gold 10 */
-  --accent-secondary: #0063A3; /* Trimble Blue 10 (used rarely) */
+  --accent: #FBAD26;            /* Trimble Gold 10 — stable across modes */
+  --accent-secondary: #AFD9F4;  /* Trimble Blue 3 — bright-on-dark for legibility;
+                                   brand accessibility table (p.28) pairs this with Gray 10 */
   --line: rgb(241 241 246 / 0.1);
   --glass-bg: rgb(37 42 46 / 0.72);
   --glass-border: rgb(241 241 246 / 0.14);
   --glass-highlight: rgb(241 241 246 / 0.08);
-}
-
-html.light {
-  color-scheme: light;
-  --bg: #F1F1F6;        /* Trimble Gray -1 */
-  --bg-elev: #FFFFFF;
-  --fg: #252A2E;        /* Trimble Hero Gray 10 */
-  --fg-muted: #585C65;  /* Trimble Gray 7 */
-  --accent: #FBAD26;    /* Trimble Gold 10 — same in both modes */
-  --accent-secondary: #0063A3;
-  --line: rgb(37 42 46 / 0.1);
-  --glass-bg: rgb(255 255 255 / 0.6);
-  --glass-border: rgb(37 42 46 / 0.08);
-  --glass-highlight: rgb(37 42 46 / 0.04);
 }
 
 html,
@@ -55,9 +62,10 @@ body {
   overflow-x: hidden;
 }
 
-/* Ambient page glow — painted on a fixed-position pseudo element instead
-   of body's background-attachment:fixed so scroll stays repaint-free. */
-body::before {
+/* Ambient page glow — reserved for dark mode only. On the light brand
+   canvas a soft gold radial wash reads pale/clinical and fights the
+   "less is more" principle from the brand guidelines (v8.0 p.41). */
+html.dark body::before {
   content: "";
   position: fixed;
   inset: 0;
@@ -82,12 +90,18 @@ body::before {
    Every piece of text on the site maps to exactly one of these.
    Hierarchy inside a tier is expressed through weight and color,
    never a new size.
+
+   Descender-safety: tier classes reserve `padding-bottom` equal to
+   the glyph descender overhang so that tight line-heights (0.95 /
+   1.05) cannot crash italic/descender glyphs into the next block.
+   This makes overlap physically impossible at every usage site,
+   without loosening the visual leading of multi-line stacks.
    ============================================================ */
 :root {
-  --text-display: clamp(2.75rem, 1.5rem + 7vw, 9rem);   /* 44 → 144px */
-  --text-heading: clamp(1.5rem, 0.75rem + 3vw, 2.75rem); /* 24 → 44px */
-  --text-body: 1rem;                                    /* 16px */
-  --text-label: 0.6875rem;                              /* 11px */
+  --text-display: clamp(2.5rem, 1.25rem + 4.5vw, 6rem);  /* 40 → 96px */
+  --text-heading: clamp(1.5rem, 0.75rem + 2vw, 2.25rem); /* 24 → 36px */
+  --text-body: 1rem;                                     /* 16px */
+  --text-label: 0.6875rem;                               /* 11px */
 }
 
 html,
@@ -96,20 +110,45 @@ body {
   line-height: 1.55;
 }
 
+/* Keyboard focus — a single, accent-tinted ring for every interactive
+   element. :focus-visible scopes it to keyboard use so pointer clicks
+   don't light up with a ring. Offset clears rounded surfaces. */
+:focus-visible {
+  outline: 2px solid color-mix(in oklch, var(--accent) 70%, transparent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 .type-display {
   font-family: var(--font-sans), system-ui, sans-serif;
   font-size: var(--text-display);
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 0.95;
+  padding-bottom: 0.12em; /* reserve italic/descender overhang */
 }
 
+/* Heading tier is one weight step below Display so the two tiers are
+   visibly distinct. Open Sans at 700 still reads confidently at 24-36px. */
 .type-heading {
   font-family: var(--font-sans), system-ui, sans-serif;
   font-size: var(--text-heading);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.05;
+  padding-bottom: 0.08em; /* reserve italic/descender overhang */
+}
+
+/* Lead tier — intro paragraphs beneath a Display or Heading. Medium
+   (500) carries more weight than body copy without competing with the
+   heading, and resolves the prior habit of defaulting to `font-light`
+   for everything (which read hesitant, not confident). */
+.type-lead {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
 }
 
 /* Legacy alias — kept so existing `font-display` classes still work,
@@ -135,35 +174,26 @@ body {
   text-transform: uppercase;
 }
 
-/* Glass surface */
-.glass {
-  background: var(--glass-bg);
-  backdrop-filter: blur(24px) saturate(1.3);
-  -webkit-backdrop-filter: blur(24px) saturate(1.3);
-  border: 1px solid var(--glass-border);
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    0 10px 40px rgb(0 0 0 / 0.25);
-}
+/* ========== Surfaces ==========
+   Brand guidelines (p.21-22): "less is more". Glass/blur is a high-noise
+   surface; it's been stripped back to the nav pill only (.glass-bare +
+   .glass-selected below). Everything else uses .surface: a solid elevated
+   card with a single hairline border. No backdrop-filter cost, no
+   rendering cost, no visual competition with photography and content. */
 
-.glass-soft {
-  background: color-mix(in oklch, var(--bg-elev) 65%, transparent);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+.surface {
+  background: var(--bg-elev);
   border: 1px solid var(--line);
 }
 
-/* Pure-blur surface: no border, no shadow, no inset highlight.
-   Text reads as floating on a translucent fog. */
+/* Pure-blur surface — reserved for the floating nav pill. */
 .glass-bare {
   background: color-mix(in oklch, var(--bg) 40%, transparent);
   backdrop-filter: blur(20px) saturate(1.2);
   -webkit-backdrop-filter: blur(20px) saturate(1.2);
 }
 
-/* Selected-state glass: dark base with a faint warm accent undertone.
-   Use for active nav items and primary CTAs — reads as "chosen" without
-   the hard contrast of solid white. */
+/* Selected-state glass — reserved for the active nav item inside the pill. */
 .glass-selected {
   background: color-mix(in oklch, var(--bg-elev) 82%, var(--accent));
   backdrop-filter: blur(18px) saturate(1.3);

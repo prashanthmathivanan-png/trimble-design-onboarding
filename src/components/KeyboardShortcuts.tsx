@@ -79,7 +79,7 @@ export function KeyboardShortcuts() {
       />
       <div
         onClick={(e) => e.stopPropagation()}
-        className="kbd-enter glass relative rounded-2xl p-8 max-w-sm w-full mx-6"
+        className="kbd-enter surface relative rounded-2xl p-8 max-w-sm w-full mx-6 shadow-[0_20px_60px_-20px_rgb(0_0_0/0.25)]"
       >
         <div className="label-xs text-[var(--color-fg-muted)]">
           KEYBOARD SHORTCUTS
@@ -94,10 +94,10 @@ export function KeyboardShortcuts() {
             { k: "Esc", label: "Close" },
           ].map(({ k, label }) => (
             <div key={k} className="flex items-center justify-between gap-4">
-              <span className="text-[var(--color-fg)]/90 font-light">
+              <span className="text-[var(--color-fg)]/90">
                 {label}
               </span>
-              <kbd className="label-xs px-2 py-1 rounded-md bg-[var(--glass-highlight)] border border-[var(--glass-border)] text-[var(--color-fg)]">
+              <kbd className="label-xs px-2 py-1 rounded-md bg-[var(--color-bg)] border border-[var(--color-line)] text-[var(--color-fg)]">
                 {k}
               </kbd>
             </div>

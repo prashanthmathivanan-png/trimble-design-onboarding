@@ -56,7 +56,7 @@ export function ChapterPage({ chapter }: { chapter: Chapter }) {
 
           <div className="mt-10 grid md:grid-cols-2 gap-10">
             <div>
-              <div className="label-xs text-[var(--color-accent)] mb-4">
+              <div className="label-xs text-[var(--color-accent-secondary)] mb-4">
                 TUX GLOBAL
               </div>
               <div className="grid gap-3">
@@ -66,7 +66,7 @@ export function ChapterPage({ chapter }: { chapter: Chapter }) {
               </div>
             </div>
             <div>
-              <div className="label-xs text-[var(--color-accent)] mb-4">
+              <div className="label-xs text-[var(--color-accent-secondary)] mb-4">
                 INDIA LEADERSHIP
               </div>
               <div className="grid gap-3">

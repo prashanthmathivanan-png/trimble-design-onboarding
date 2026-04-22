@@ -8,6 +8,7 @@ import { SlideReel, Slide } from "@/components/SlideReel";
 import { ScrollHint } from "@/components/ScrollHint";
 import { Greeting } from "@/components/Greeting";
 import { SignedBy } from "@/components/SignedBy";
+import { BrandCurve } from "@/components/BrandCurve";
 import { jayPlan } from "@/data/jay-plan";
 
 export default function WelcomePage() {
@@ -17,9 +18,12 @@ export default function WelcomePage() {
     <>
       {/* ========== HERO ========== */}
       <section className="relative min-h-[100svh] overflow-hidden">
+        {/* Brand curve motif — "confidence at every turn" */}
+        <BrandCurve variant="hero" tone="accent" />
+
         <div className="relative mx-auto max-w-[1600px] px-6 md:px-20 pt-40 md:pt-56 pb-24">
           <Reveal>
-            <div className="label-xs text-[var(--color-accent)]">CHAPTER 00</div>
+            <div className="label-xs text-[var(--color-accent-secondary)]">CHAPTER 00</div>
           </Reveal>
 
           <Reveal delay={0.15}>
@@ -29,7 +33,7 @@ export default function WelcomePage() {
           </Reveal>
 
           <Reveal delay={0.35}>
-            <p className="mt-10 max-w-xl text-[var(--color-fg)]/85 font-light">
+            <p className="type-lead mt-10 max-w-xl text-[var(--color-fg)]/90">
               A 90-day onboarding and leadership plan — from the{" "}
               <TrimbleDesignAPAC className="text-[var(--color-fg)]" /> team to our new{" "}
               <span className="text-[var(--color-fg)]">Senior UX Design Manager.</span>
@@ -41,14 +45,14 @@ export default function WelcomePage() {
               <Link
                 href="/learn"
                 transitionTypes={["nav-forward"]}
-                className="group inline-flex items-center gap-3 px-5 py-3 rounded-full glass-selected text-[var(--color-fg)] font-semibold hover:brightness-110 transition"
+                className="group inline-flex items-center gap-3 px-5 py-3 rounded-full bg-[var(--color-accent)] text-[#252A2E] font-semibold hover:brightness-95 transition"
               >
                 Begin Chapter 01
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </Link>
               <a
                 href="#team"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full glass hover:bg-[var(--glass-highlight)] transition"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-[var(--color-line)] text-[var(--color-fg)] hover:bg-[var(--color-bg-elev)] transition"
               >
                 <Compass size={16} weight="duotone" />
                 Meet the team first
@@ -69,7 +73,7 @@ export default function WelcomePage() {
               <h2 className="type-display max-w-5xl">
                 <TrimbleDesignAPAC />.
               </h2>
-              <p className="mt-10 max-w-2xl text-[var(--color-fg)]/80 font-light">
+              <p className="type-lead mt-10 max-w-2xl text-[var(--color-fg)]/85">
                 {team.about}
               </p>
             </Slide>,
@@ -85,7 +89,7 @@ export default function WelcomePage() {
               <h2 className="type-heading max-w-5xl">
                 {team.mission.title}
               </h2>
-              <p className="mt-10 max-w-2xl text-[var(--color-fg-muted)] font-light">
+              <p className="mt-10 max-w-2xl text-[var(--color-fg-muted)]">
                 {team.mission.body}
               </p>
             </Slide>,
@@ -101,7 +105,7 @@ export default function WelcomePage() {
               <h2 className="type-heading max-w-5xl">
                 {team.vision.title}
               </h2>
-              <p className="mt-10 max-w-2xl text-[var(--color-fg-muted)] font-light">
+              <p className="mt-10 max-w-2xl text-[var(--color-fg-muted)]">
                 {team.vision.body}
               </p>
             </Slide>,
@@ -117,11 +121,11 @@ export default function WelcomePage() {
               <h2 className="type-heading max-w-4xl">
                 {team.strategy.title}
               </h2>
-              <div className="mt-12 grid md:grid-cols-3 gap-4 w-full">
+              <div className="mt-12 grid md:grid-cols-3 gap-10 md:gap-8 w-full">
                 {team.strategy.pillars.map((pillar, i) => (
                   <div
                     key={pillar.name}
-                    className="glass-soft rounded-xl p-6 h-full"
+                    className="pt-6 border-t border-[var(--color-line)]"
                   >
                     <div className="label-xs text-[var(--color-fg-muted)]">
                       {String(i + 1).padStart(2, "0")}
@@ -129,7 +133,7 @@ export default function WelcomePage() {
                     <div className="mt-2 font-semibold">
                       {pillar.name}
                     </div>
-                    <p className="mt-3 text-[var(--color-fg-muted)] font-light">
+                    <p className="mt-3 text-[var(--color-fg-muted)]">
                       {pillar.body}
                     </p>
                   </div>
@@ -153,28 +157,36 @@ export default function WelcomePage() {
           </h2>
         </Reveal>
 
-        <div className="mt-12 grid md:grid-cols-3 gap-4 max-w-4xl">
-          <PersonCard person={person.reportsTo} />
+        <div className="mt-12 grid md:grid-cols-3 gap-4 md:gap-6 max-w-5xl">
+          <PersonCard person={person.reportsTo} variant="featured" />
           {person.buddies.map((b) => (
-            <PersonCard key={b.id} person={b} />
+            <PersonCard key={b.id} person={b} variant="featured" />
           ))}
         </div>
       </section>
 
       {/* ========== CHAPTER NAV ========== */}
-      <section className="relative mx-auto max-w-[1600px] px-6 md:px-20 py-32">
-        <Reveal>
-          <div className="label-xs text-[var(--color-fg-muted)]">THE JOURNEY</div>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <h2 className="mt-4 type-heading max-w-4xl">
-            Three chapters.
-            <br />
-            Ninety days.
-          </h2>
+      <section className="relative py-32">
+        <div className="mx-auto max-w-[1600px] px-6 md:px-20">
+          <Reveal>
+            <div className="label-xs text-[var(--color-fg-muted)]">THE JOURNEY</div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <h2 className="mt-4 type-heading max-w-4xl">
+              Three chapters.
+              <br />
+              Ninety days.
+            </h2>
+          </Reveal>
+        </div>
+
+        <Reveal delay={0.2}>
+          <div className="mt-16 mb-6 md:mb-8 w-full">
+            <BrandCurve variant="journey" tone="accent" />
+          </div>
         </Reveal>
 
-        <div className="mt-16 grid md:grid-cols-3 gap-4">
+        <div className="mx-auto max-w-[1600px] px-6 md:px-20 grid md:grid-cols-3 gap-4">
           {chapters.map((c, i) => (
             <Reveal key={c.slug} delay={i * 0.1}>
               <Link
@@ -203,7 +215,7 @@ export default function WelcomePage() {
                     <div className="type-heading">
                       {c.verb}.
                     </div>
-                    <p className="mt-3 opacity-80 max-w-xs font-light">
+                    <p className="mt-3 opacity-90 max-w-xs">
                       {c.tagline}
                     </p>
                     <div className="mt-5 inline-flex items-center gap-2 font-semibold">
