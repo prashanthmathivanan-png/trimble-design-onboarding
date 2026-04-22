@@ -24,7 +24,7 @@ const LETTERS: Record<Chapter["slug"], Copy> = {
     signature: "Nawaz & Prashanth — Trimble Design APAC",
   },
   lead: {
-    heading: "Welcome home, Jay.",
+    heading: "The floor is yours.",
     body:
       "Ninety days. A roadmap that's yours. A team that's ready. From here, the direction is yours to set — with confidence at every turn.",
     signature: "The Trimble Design APAC team",
