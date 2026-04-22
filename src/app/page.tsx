@@ -166,25 +166,27 @@ export default function WelcomePage() {
       </section>
 
       {/* ========== CHAPTER NAV ========== */}
-      <section className="relative mx-auto max-w-[1600px] px-6 md:px-20 py-32">
-        <Reveal>
-          <div className="label-xs text-[var(--color-fg-muted)]">THE JOURNEY</div>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <h2 className="mt-4 type-heading max-w-4xl">
-            Three chapters.
-            <br />
-            Ninety days.
-          </h2>
-        </Reveal>
+      <section className="relative py-32">
+        <div className="mx-auto max-w-[1600px] px-6 md:px-20">
+          <Reveal>
+            <div className="label-xs text-[var(--color-fg-muted)]">THE JOURNEY</div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <h2 className="mt-4 type-heading max-w-4xl">
+              Three chapters.
+              <br />
+              Ninety days.
+            </h2>
+          </Reveal>
+        </div>
 
         <Reveal delay={0.2}>
-          <div className="mt-16 mb-6 md:mb-8">
+          <div className="mt-16 mb-6 md:mb-8 w-full">
             <BrandCurve variant="journey" tone="accent" />
           </div>
         </Reveal>
 
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="mx-auto max-w-[1600px] px-6 md:px-20 grid md:grid-cols-3 gap-4">
           {chapters.map((c, i) => (
             <Reveal key={c.slug} delay={i * 0.1}>
               <Link

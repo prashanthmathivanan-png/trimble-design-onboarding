@@ -34,13 +34,10 @@ export function BrandCurve({
 
   if (variant === "journey") {
     // Ascending arc: a 90-day climb from Welcome (low-left) through
-    // Level (mid) to Lead (high-right). Markers at 16.6%, 50%, 83.3%
-    // sit on the curve; y-values are pre-computed from the cubic.
-    const markers: Array<{ cx: number; cy: number }> = [
-      { cx: 200, cy: 64 },
-      { cx: 600, cy: 37 },
-      { cx: 1000, cy: 11 },
-    ];
+    // Level (mid) to Lead (high-right). Spans edge-to-edge of the
+    // viewport and fades in/out at each side so it reads as a
+    // fragment of a much longer journey.
+    const gradientId = `journey-fade-${tone}`;
 
     return (
       <svg
@@ -49,24 +46,22 @@ export function BrandCurve({
         className={clsx("block w-full h-[56px] md:h-[72px]", className)}
         aria-hidden="true"
       >
+        <defs>
+          <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor={stroke} stopOpacity="0" />
+            <stop offset="12%" stopColor={stroke} stopOpacity="0.9" />
+            <stop offset="88%" stopColor={stroke} stopOpacity="0.9" />
+            <stop offset="100%" stopColor={stroke} stopOpacity="0" />
+          </linearGradient>
+        </defs>
         <path
           d="M 0 70 C 400 65, 800 10, 1200 5"
-          stroke={stroke}
+          stroke={`url(#${gradientId})`}
           strokeWidth="1.25"
           fill="none"
           strokeLinecap="round"
           vectorEffect="non-scaling-stroke"
-          opacity="0.9"
         />
-        {markers.map((m, i) => (
-          <circle
-            key={i}
-            cx={m.cx}
-            cy={m.cy}
-            r="4"
-            fill={stroke}
-          />
-        ))}
       </svg>
     );
   }
