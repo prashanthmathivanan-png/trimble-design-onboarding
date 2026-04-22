@@ -120,29 +120,20 @@ export const jayPlan: OnboardingPlan = {
   leaders: {
     tuxGlobal: [
       {
+        id: "chris-peppler",
+        name: "Chris Peppler",
+        role: "Vice President, Platform",
+        avatarSeed: "chris-peppler",
+        email: "chris_peppler@trimble.com",
+        photo: "/people/chris-peppler.webp",
+      },
+      {
         id: "jessica-betha",
         name: "Jessica Bethá",
         role: "Sr. PX Business Partner",
         avatarSeed: "jessica-betha",
         email: "jessica_betha@trimble.com",
         photo: "/people/jessica-betha.webp",
-      },
-      {
-        id: "chris-peppler",
-        name: "Chris Peppler",
-        role: "Vice President, Platform",
-        note: "Sync on design impact across the org.",
-        avatarSeed: "chris-peppler",
-        email: "chris_peppler@trimble.com",
-        photo: "/people/chris-peppler.webp",
-      },
-      {
-        id: "mark",
-        name: "Mark Schwartz",
-        role: "Group President, AECO",
-        avatarSeed: "mark-aeco",
-        email: "mark_schwartz@trimble.com",
-        photo: "/people/mark-schwartz.webp",
       },
     ],
     indiaLeadership: [

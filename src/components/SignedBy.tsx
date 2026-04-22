@@ -82,12 +82,6 @@ export function SignedBy() {
                   )}
                 </div>
               ))}
-              <p
-                className="sig-line mt-3 text-[var(--color-fg-muted)] italic max-w-sm"
-                style={{ animationDelay: `${SIGNATORIES.length * 28 + 60}ms` }}
-              >
-                Sixteen of us made it. It&apos;s yours to run.
-              </p>
             </div>
           </motion.div>
         )}

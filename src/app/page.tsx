@@ -69,77 +69,79 @@ export default function WelcomePage() {
         <SlideReel
           slides={[
             // 01 — About
-            <Slide key="about" index={0} total={4} kicker="ABOUT" align="left">
-              <h2 className="type-heading max-w-5xl">
-                <TrimbleDesignAPAC />.
-              </h2>
-              <p className="type-lead mt-8 max-w-2xl text-[var(--color-fg)]/85">
-                {team.about}
-              </p>
-            </Slide>,
+            {
+              kicker: "ABOUT",
+              content: (
+                <Slide align="left">
+                  <h2 className="type-heading max-w-5xl">
+                    <TrimbleDesignAPAC />.
+                  </h2>
+                  <p className="type-lead mt-8 max-w-2xl text-[var(--color-fg)]/85">
+                    {team.about}
+                  </p>
+                </Slide>
+              ),
+            },
 
             // 02 — Mission
-            <Slide
-              key="mission"
-              index={1}
-              total={4}
-              kicker="MISSION"
-              align="left"
-            >
-              <h2 className="type-heading max-w-5xl">
-                {team.mission.title}
-              </h2>
-              <p className="type-lead mt-8 max-w-2xl text-[var(--color-fg)]/85">
-                {team.mission.body}
-              </p>
-            </Slide>,
+            {
+              kicker: "MISSION",
+              content: (
+                <Slide align="left">
+                  <h2 className="type-heading max-w-5xl">
+                    {team.mission.title}
+                  </h2>
+                  <p className="type-lead mt-8 max-w-2xl text-[var(--color-fg)]/85">
+                    {team.mission.body}
+                  </p>
+                </Slide>
+              ),
+            },
 
             // 03 — Vision
-            <Slide
-              key="vision"
-              index={2}
-              total={4}
-              kicker="VISION"
-              align="left"
-            >
-              <h2 className="type-heading max-w-5xl">
-                {team.vision.title}
-              </h2>
-              <p className="type-lead mt-8 max-w-2xl text-[var(--color-fg)]/85">
-                {team.vision.body}
-              </p>
-            </Slide>,
+            {
+              kicker: "VISION",
+              content: (
+                <Slide align="left">
+                  <h2 className="type-heading max-w-5xl">
+                    {team.vision.title}
+                  </h2>
+                  <p className="type-lead mt-8 max-w-2xl text-[var(--color-fg)]/85">
+                    {team.vision.body}
+                  </p>
+                </Slide>
+              ),
+            },
 
             // 04 — Strategy + 3 pillars inline
-            <Slide
-              key="strategy"
-              index={3}
-              total={4}
-              kicker="STRATEGY"
-              align="left"
-            >
-              <h2 className="type-heading max-w-4xl">
-                {team.strategy.title}
-              </h2>
-              <div className="mt-12 grid md:grid-cols-3 gap-10 md:gap-8 w-full">
-                {team.strategy.pillars.map((pillar, i) => (
-                  <div
-                    key={pillar.name}
-                    className="pt-6 border-t border-[var(--color-line)]"
-                  >
-                    <div className="label-xs text-[var(--color-fg-muted)]">
-                      {String(i + 1).padStart(2, "0")}
-                    </div>
-                    <div className="mt-2 font-semibold">
-                      {pillar.name}
-                    </div>
-                    <p className="mt-3 text-[var(--color-fg-muted)]">
-                      {pillar.body}
-                    </p>
+            {
+              kicker: "STRATEGY",
+              content: (
+                <Slide align="left">
+                  <h2 className="type-heading max-w-4xl">
+                    {team.strategy.title}
+                  </h2>
+                  <div className="mt-12 grid md:grid-cols-3 gap-10 md:gap-8 w-full">
+                    {team.strategy.pillars.map((pillar, i) => (
+                      <div
+                        key={pillar.name}
+                        className="pt-6 border-t border-[var(--color-line)]"
+                      >
+                        <div className="label-xs text-[var(--color-fg-muted)]">
+                          {String(i + 1).padStart(2, "0")}
+                        </div>
+                        <div className="mt-2 font-semibold">
+                          {pillar.name}
+                        </div>
+                        <p className="mt-3 text-[var(--color-fg-muted)]">
+                          {pillar.body}
+                        </p>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </Slide>,
+                </Slide>
+              ),
+            },
           ]}
         />
       </section>

@@ -57,7 +57,7 @@ export function ChapterPage({ chapter }: { chapter: Chapter }) {
           <div className="mt-10 grid md:grid-cols-2 gap-10">
             <div>
               <div className="label-xs text-[var(--color-accent-secondary)] mb-4">
-                TUX GLOBAL
+                GLOBAL LEADERSHIP
               </div>
               <div className="grid gap-3">
                 {jayPlan.leaders.tuxGlobal.map((p) => (

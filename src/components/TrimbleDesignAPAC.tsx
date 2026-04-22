@@ -6,7 +6,7 @@ import clsx from "clsx";
  */
 export function TrimbleDesignAPAC({ className }: { className?: string }) {
   return (
-    <span className={clsx("font-helvetica", className)}>
+    <span className={clsx("font-helvetica whitespace-nowrap", className)}>
       <span className="font-bold">Trimble</span>
       <span className="font-normal"> Design APAC</span>
     </span>

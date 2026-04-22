@@ -2,53 +2,86 @@
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import {
+  AnimatePresence,
   motion,
+  useMotionValue,
   useMotionValueEvent,
   useReducedMotion,
-  useScroll,
   useTransform,
   type MotionValue,
 } from "motion/react";
 
+export type SlideItem = { kicker?: string; content: ReactNode };
+
 /**
- * SlideReel — scroll-pinned storytelling section.
+ * SlideReel — scroll-pinned storytelling section with a pure dissolve
+ * between slides and a single anchored kicker header.
  *
  * Layout:
- *   - Outer wrapper has height = n × 100vh (the "scroll runway").
+ *   - Outer wrapper has height = n × 100svh (the "scroll runway").
  *   - An inner sticky element pins at the top of the viewport for that
- *     entire runway, so as the user scrolls, the viewport stays locked
- *     on this section while each slide takes its turn.
- *   - Every slide is absolutely stacked inside the sticky container;
- *     opacity + translateY are driven by scroll progress (compositor-
- *     only, so no frame cost).
- *   - Dot pagination sits on the right edge, vertical. Each dot
- *     scroll-jumps to its slide's "home" position.
+ *     entire runway.
+ *   - Each slide is absolutely stacked inside the sticky container;
+ *     opacity is the only animated property (compositor-only), shaped
+ *     so the midpoint between two slides is a faint ghost rather than
+ *     two stacked headlines.
+ *   - The "NN / total — KICKER" header is NOT inside the animated
+ *     layers; it's rendered once in the sticky container using the
+ *     exact same flex-centered layout as Slide, so it sits in the
+ *     same spot visually but doesn't scale/fade/move with the slides.
+ *     Only the kicker *text* crossfades when `active` changes.
+ *   - Dot pagination sits on the right edge, vertical.
  *
- * Once all n slides are consumed, natural scroll continues to the next
- * section. Keyboard ArrowDown/ArrowUp jump between slides.
+ * Behaviour:
+ *   - When the user stops scrolling mid-transition, a debounced snap
+ *     handler smoothly pulls the scroll to the nearest slide's home
+ *     position. Guarded so click-to-navigate + snap don't fight.
  */
-export function SlideReel({ slides }: { slides: ReactNode[] }) {
+export function SlideReel({ slides }: { slides: SlideItem[] }) {
   const n = slides.length;
   const wrapperRef = useRef<HTMLElement | null>(null);
   const [active, setActive] = useState(0);
   const reduced = useReducedMotion();
 
-  const { scrollYProgress } = useScroll({
-    target: wrapperRef,
-    offset: ["start start", "end end"],
-  });
+  // Manual scroll progress, 0..1 across the section's runway.
+  const scrollYProgress = useMotionValue(0);
 
-  // Map continuous scroll progress → integer active slide (for dot
-  // highlights and a11y labels). Guard against updates while paused.
+  // Flag set while we're programmatically scrolling (dot click or
+  // snap-to-nearest) so our scroll-idle handler doesn't re-snap us.
+  const programmaticRef = useRef(false);
+  const programmaticTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+
+    const update = () => {
+      const rect = el.getBoundingClientRect();
+      const runway = el.offsetHeight - window.innerHeight;
+      if (runway <= 0) {
+        scrollYProgress.set(0);
+        return;
+      }
+      const scrolled = -rect.top;
+      const p = Math.max(0, Math.min(1, scrolled / runway));
+      scrollYProgress.set(p);
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [scrollYProgress]);
+
   useMotionValueEvent(scrollYProgress, "change", (v) => {
     const i = Math.min(n - 1, Math.max(0, Math.round(v * (n - 1))));
     setActive((prev) => (prev === i ? prev : i));
   });
 
-  // Scroll to a slide's "home" progress point. scroll progress 0..1 is
-  // distributed evenly across n-1 transitions, so slide i lives at
-  // i/(n-1). Convert that to a document scrollTop.
-  const goTo = useCallback(
+  const scrollToSlide = useCallback(
     (i: number) => {
       const el = wrapperRef.current;
       if (!el) return;
@@ -57,13 +90,68 @@ export function SlideReel({ slides }: { slides: ReactNode[] }) {
       const wrapperTop = window.scrollY + rect.top;
       const runway = el.offsetHeight - window.innerHeight;
       const target = wrapperTop + (clamped / (n - 1)) * runway;
+
+      // Mark this scroll as programmatic. Re-clear after the smooth
+      // scroll has had time to settle (~700ms covers Lenis + native).
+      programmaticRef.current = true;
+      if (programmaticTimer.current !== null) {
+        window.clearTimeout(programmaticTimer.current);
+      }
+      programmaticTimer.current = window.setTimeout(() => {
+        programmaticRef.current = false;
+      }, 700);
+
       window.scrollTo({ top: target, behavior: "smooth" });
     },
     [n]
   );
 
-  // Arrow-key navigation. Only acts when the pinned section is on
-  // screen to avoid stealing keys from the rest of the page.
+  // Scroll-idle snap. When the user stops scrolling inside the reel's
+  // runway, smoothly pull them to the nearest slide's home so they
+  // never end up parked mid-dissolve. Debounced, guarded, and bails
+  // if scroll is outside the reel or already at a home.
+  useEffect(() => {
+    if (reduced) return;
+    const el = wrapperRef.current;
+    if (!el) return;
+
+    let idleTimer: number | null = null;
+
+    const onScroll = () => {
+      if (idleTimer !== null) window.clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(() => {
+        if (programmaticRef.current) return;
+        const node = wrapperRef.current;
+        if (!node) return;
+
+        const rect = node.getBoundingClientRect();
+        const runway = node.offsetHeight - window.innerHeight;
+        if (runway <= 0) return;
+
+        const scrolled = -rect.top;
+        // Only snap while the reel is pinned (scrolled position
+        // inside [0, runway]). Outside this band we're in the hero
+        // or the next section and should not snap.
+        if (scrolled < 0 || scrolled > runway) return;
+
+        const p = scrolled / runway;
+        const nearest = Math.round(p * (n - 1));
+        const targetP = nearest / (n - 1);
+        // Already within ~1% of a home? No need to snap.
+        if (Math.abs(p - targetP) < 0.01) return;
+
+        scrollToSlide(nearest);
+      }, 160);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (idleTimer !== null) window.clearTimeout(idleTimer);
+    };
+  }, [n, reduced, scrollToSlide]);
+
+  // Keyboard nav while the reel is on screen.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLElement) {
@@ -78,15 +166,15 @@ export function SlideReel({ slides }: { slides: ReactNode[] }) {
 
       if (e.key === "ArrowDown" || e.key === "ArrowRight") {
         e.preventDefault();
-        goTo(active + 1);
+        scrollToSlide(active + 1);
       } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
         e.preventDefault();
-        goTo(active - 1);
+        scrollToSlide(active - 1);
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [active, goTo]);
+  }, [active, scrollToSlide]);
 
   return (
     <section
@@ -96,18 +184,30 @@ export function SlideReel({ slides }: { slides: ReactNode[] }) {
       aria-roledescription="carousel"
     >
       <div className="sticky top-0 h-[100svh] overflow-hidden">
-        {slides.map((slide, i) => (
+        {/* Animated slide layers — pure opacity dissolve, no scale
+            or translate so nothing appears to move between slides. */}
+        {slides.map((s, i) => (
           <SlideLayer
             key={i}
             index={i}
             total={n}
             progress={scrollYProgress}
             active={active}
-            reduced={!!reduced}
           >
-            {slide}
+            {s.content}
           </SlideLayer>
         ))}
+
+        {/* Anchored kicker header — mirrors the Slide layout exactly
+            so it sits at the same visual position, but lives outside
+            the animated layers so it never moves, scales, or fades
+            in aggregate. Only the changing kicker TEXT crossfades
+            when active changes. */}
+        <AnchoredKicker
+          active={active}
+          total={n}
+          kickers={slides.map((s) => s.kicker)}
+        />
 
         {/* Vertical dot pagination — right edge, centered. */}
         <nav
@@ -123,7 +223,7 @@ export function SlideReel({ slides }: { slides: ReactNode[] }) {
                 role="tab"
                 aria-selected={isActive}
                 aria-label={`Go to slide ${i + 1}`}
-                onClick={() => goTo(i)}
+                onClick={() => scrollToSlide(i)}
                 className="relative grid place-items-center w-5 h-5 rounded-full"
               >
                 <span
@@ -143,55 +243,107 @@ export function SlideReel({ slides }: { slides: ReactNode[] }) {
 }
 
 /**
- * One layer in the pinned stack. Each slide's "home" progress point is
- * i/(n-1); it crossfades in/out over a window of ±1/(n-1) around that.
- * Opacity is hard-clamped so slides fully disappear outside their
- * window (avoids subpixel ghosting on stacked text).
+ * Anchored kicker header. Positioned with a fixed top padding that
+ * matches Slide's `pt-[28vh]`, so it always sits at the exact same
+ * y regardless of which slide is active (slide content heights vary,
+ * which is why a flex-centered approach can't keep the kicker
+ * anchored).
+ *
+ * Only the kicker *text* is animated (crossfade + tiny y-shift)
+ * when the active slide changes. The "NN / NN" counter re-renders
+ * its text but keeps its box in place.
+ */
+function AnchoredKicker({
+  active,
+  total,
+  kickers,
+}: {
+  active: number;
+  total: number;
+  kickers: (string | undefined)[];
+}) {
+  const kicker = kickers[active];
+
+  return (
+    <div className="absolute inset-0 pointer-events-none z-[1]">
+      <div className="relative mx-auto max-w-[1400px] w-full h-full px-6 md:pl-20 md:pr-28 pt-[28vh] flex flex-col items-start text-left">
+        <div className="flex items-center gap-4 label-xs text-[var(--color-fg-muted)]">
+          <span className="tabular-nums">
+            {String(active + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+          </span>
+          <span className="w-8 h-px bg-[var(--color-fg-muted)]" />
+          {/* Keep min-width so width doesn't collapse between
+              exit/enter; keep the motion span in normal inline flow
+              (no absolute positioning) so its text baseline aligns
+              with the "NN / NN" counter next to it. */}
+          <span className="inline-flex items-center min-w-[7ch]">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={kicker ?? "empty"}
+                initial={{ opacity: 0, y: 3 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -3 }}
+                transition={{ duration: 0.22, ease: "easeOut" }}
+                className="text-[var(--color-accent-secondary)]"
+              >
+                {kicker ?? ""}
+              </motion.span>
+            </AnimatePresence>
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * One layer in the pinned stack. Pure opacity dissolve — no scale
+ * or translate — so nothing physically moves between slides. The
+ * opacity curve compresses the "both visible" moment into a short
+ * scroll window with a faint ghost (8% peak) rather than 50% stacked
+ * headlines.
  */
 function SlideLayer({
   index,
   total,
   progress,
   active,
-  reduced,
   children,
 }: {
   index: number;
   total: number;
   progress: MotionValue<number>;
   active: number;
-  reduced: boolean;
   children: ReactNode;
 }) {
   const step = total > 1 ? 1 / (total - 1) : 1;
   const home = index * step;
+  const isFirst = index === 0;
+  const isLast = index === total - 1;
 
-  // Opacity window: 0 → 1 → 0 across [home-step, home, home+step].
-  // For reduced motion we collapse the crossfade to a step function.
+  const leftStop = Math.max(0, home - step);
+  const leftMid = Math.max(0, home - step / 3);
+  const rightMid = Math.min(1, home + step / 3);
+  const rightStop = Math.min(1, home + step);
+
   const opacity = useTransform(
     progress,
-    reduced
-      ? [home - step / 2, home - step / 2 + 0.0001, home + step / 2 - 0.0001, home + step / 2]
-      : [home - step, home, home + step],
-    reduced ? [0, 1, 1, 0] : [0, 1, 0]
+    [leftStop, leftMid, home, rightMid, rightStop],
+    [
+      isFirst ? 1 : 0,
+      isFirst ? 1 : 0.08,
+      1,
+      isLast ? 1 : 0.08,
+      isLast ? 1 : 0,
+    ]
   );
 
-  // Subtle lift in / out. Kept small (32px) so it reads as a settle,
-  // not a slide-show.
-  const y = useTransform(
-    progress,
-    [home - step, home, home + step],
-    reduced ? [0, 0, 0] : [32, 0, -32]
-  );
-
-  // Only the active layer should receive pointer events — otherwise
-  // invisible layers eat clicks from links that land on them.
   const isActive = active === index;
 
   return (
     <motion.div
-      className="absolute inset-0 will-change-[opacity,transform]"
-      style={{ opacity, y, pointerEvents: isActive ? "auto" : "none" }}
+      className="absolute inset-0 will-change-opacity"
+      style={{ opacity, pointerEvents: isActive ? "auto" : "none" }}
       aria-hidden={!isActive}
     >
       {children}
@@ -200,23 +352,19 @@ function SlideLayer({
 }
 
 /**
- * Slide shell — the visual frame for each layer.
+ * Slide shell — the visual frame for each layer's content.
  *
- * Content is vertically centered within the pinned viewport so slides
- * read as balanced compositions rather than bottom-anchored moments.
- * Right padding is padded extra on desktop to clear the vertical dot
- * pagination.
+ * Uses a fixed top padding (`pt-[28vh]`) matching the anchored
+ * kicker, plus a small gap (`mt-10`) before the real content so
+ * every slide's headline starts at exactly the same y-position
+ * regardless of the slide's content length. This is what keeps
+ * the anchored kicker + headline combo from visually shifting
+ * between slides.
  */
 export function Slide({
-  index,
-  total,
-  kicker,
   align = "left",
   children,
 }: {
-  index: number;
-  total: number;
-  kicker?: string;
   align?: "left" | "center" | "right";
   children: ReactNode;
 }) {
@@ -230,19 +378,12 @@ export function Slide({
   return (
     <div className="relative h-full w-full flex">
       <div
-        className={`relative mx-auto max-w-[1400px] w-full h-full px-6 md:pl-20 md:pr-28 py-16 md:py-24 flex flex-col justify-center ${alignClass}`}
+        className={`relative mx-auto max-w-[1400px] w-full h-full px-6 md:pl-20 md:pr-28 pt-[28vh] pb-16 md:pb-24 flex flex-col ${alignClass}`}
       >
-        <div className="flex items-center gap-4 mb-6 label-xs text-[var(--color-fg-muted)]">
-          <span>
-            {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-          </span>
-          {kicker && (
-            <>
-              <span className="w-8 h-px bg-[var(--color-fg-muted)]" />
-              <span className="text-[var(--color-accent-secondary)]">{kicker}</span>
-            </>
-          )}
-        </div>
+        {/* Gap reserving the kicker row's height + its bottom margin,
+            so the first real child (headline) sits below the anchored
+            kicker at the same offset the inline kicker used to. */}
+        <div aria-hidden className="h-10 shrink-0" />
         {children}
       </div>
     </div>
