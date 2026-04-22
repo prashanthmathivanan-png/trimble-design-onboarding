@@ -67,7 +67,7 @@ export function ChapterHero({
               <div className="label-xs text-[var(--color-fg-muted)]">
                 {verb.toUpperCase()}
               </div>
-              <div className="label-xs text-[var(--color-accent)] mt-1">
+              <div className="label-xs text-[var(--color-accent-secondary)] mt-1">
                 {duration}
               </div>
             </div>

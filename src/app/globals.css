@@ -7,6 +7,7 @@
   --color-fg: var(--fg);
   --color-fg-muted: var(--fg-muted);
   --color-accent: var(--accent);
+  --color-accent-secondary: var(--accent-secondary);
   --color-line: var(--line);
   --font-sans: var(--font-sans);
 }
@@ -25,8 +26,8 @@ html.light {
   --bg-elev: #FFFFFF;   /* White — secondary canvas */
   --fg: #252A2E;        /* Trimble Hero Gray 10 */
   --fg-muted: #585C65;  /* Trimble Gray 7 */
-  --accent: #FBAD26;    /* Trimble Gold 10 */
-  --accent-secondary: #0063A3; /* Trimble Blue 10 */
+  --accent: #FBAD26;            /* Trimble Gold 10 — journey / progress */
+  --accent-secondary: #0063A3;  /* Trimble Blue 10 — section / org labels */
   --line: rgb(37 42 46 / 0.1);
   --glass-bg: rgb(255 255 255 / 0.6);
   --glass-border: rgb(37 42 46 / 0.08);
@@ -40,8 +41,9 @@ html.dark {
   --bg-elev: #252A2E;   /* Trimble Hero Gray 10 */
   --fg: #F1F1F6;        /* Trimble Gray -1 */
   --fg-muted: #A3A6B1;  /* Trimble Gray 3 (soft, legible on hero gray) */
-  --accent: #FBAD26;    /* Trimble Gold 10 — accent is stable across modes */
-  --accent-secondary: #0063A3;
+  --accent: #FBAD26;            /* Trimble Gold 10 — stable across modes */
+  --accent-secondary: #AFD9F4;  /* Trimble Blue 3 — bright-on-dark for legibility;
+                                   brand accessibility table (p.28) pairs this with Gray 10 */
   --line: rgb(241 241 246 / 0.1);
   --glass-bg: rgb(37 42 46 / 0.72);
   --glass-border: rgb(241 241 246 / 0.14);
@@ -88,12 +90,18 @@ html.dark body::before {
    Every piece of text on the site maps to exactly one of these.
    Hierarchy inside a tier is expressed through weight and color,
    never a new size.
+
+   Descender-safety: tier classes reserve `padding-bottom` equal to
+   the glyph descender overhang so that tight line-heights (0.95 /
+   1.05) cannot crash italic/descender glyphs into the next block.
+   This makes overlap physically impossible at every usage site,
+   without loosening the visual leading of multi-line stacks.
    ============================================================ */
 :root {
-  --text-display: clamp(2.75rem, 1.5rem + 7vw, 9rem);   /* 44 → 144px */
-  --text-heading: clamp(1.5rem, 0.75rem + 3vw, 2.75rem); /* 24 → 44px */
-  --text-body: 1rem;                                    /* 16px */
-  --text-label: 0.6875rem;                              /* 11px */
+  --text-display: clamp(2.5rem, 1.25rem + 4.5vw, 6rem);  /* 40 → 96px */
+  --text-heading: clamp(1.5rem, 0.75rem + 2vw, 2.25rem); /* 24 → 36px */
+  --text-body: 1rem;                                     /* 16px */
+  --text-label: 0.6875rem;                               /* 11px */
 }
 
 html,
@@ -108,6 +116,7 @@ body {
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 0.95;
+  padding-bottom: 0.12em; /* reserve italic/descender overhang */
 }
 
 .type-heading {
@@ -116,6 +125,7 @@ body {
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.05;
+  padding-bottom: 0.08em; /* reserve italic/descender overhang */
 }
 
 /* Legacy alias — kept so existing `font-display` classes still work,

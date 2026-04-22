@@ -152,7 +152,7 @@ export function Slide({
           {kicker && (
             <>
               <span className="w-8 h-px bg-[var(--color-fg-muted)]" />
-              <span className="text-[var(--color-accent)]">{kicker}</span>
+              <span className="text-[var(--color-accent-secondary)]">{kicker}</span>
             </>
           )}
         </div>
